@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="py2和3两个版本的Queue模块命名不同，py3 queue 最清楚的Queue说明  廖雪峰的教程 董伟明的博客—进程 董伟明的博客—线程  put: 向队列中添加一个项。get: 从队列中删除并返回一个项。task_done: 当某一项任务完成时调用。join: 阻塞直到所有的项目都被处理完。 join 和 task_doneps：task_done中的任务是指get任务，put方法不需要调">
+<meta name="description" content="py2和3两个版本的Queue模块命名不同，py3 queue 最清楚的Queue说明  廖雪峰的教程 董伟明的博客—进程 董伟明的博客—线程  put: 向队列中添加一个项。get: 从队列中删除并返回一个项。task_done: 当某一项任务完成时调用。join: 阻塞直到所有的项目都被处理完。">
 <meta name="keywords" content="python,queue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python中的queue模块">
 <meta property="og:url" content="http://blog.zjwang.info/2017/12/21/python/Queue/index.html">
 <meta property="og:site_name" content="Withrainy">
-<meta property="og:description" content="py2和3两个版本的Queue模块命名不同，py3 queue 最清楚的Queue说明  廖雪峰的教程 董伟明的博客—进程 董伟明的博客—线程  put: 向队列中添加一个项。get: 从队列中删除并返回一个项。task_done: 当某一项任务完成时调用。join: 阻塞直到所有的项目都被处理完。 join 和 task_doneps：task_done中的任务是指get任务，put方法不需要调">
+<meta property="og:description" content="py2和3两个版本的Queue模块命名不同，py3 queue 最清楚的Queue说明  廖雪峰的教程 董伟明的博客—进程 董伟明的博客—线程  put: 向队列中添加一个项。get: 从队列中删除并返回一个项。task_done: 当某一项任务完成时调用。join: 阻塞直到所有的项目都被处理完。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-31T20:31:45.362Z">
+<meta property="og:updated_time" content="2018-03-31T22:12:22.001Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python中的queue模块">
-<meta name="twitter:description" content="py2和3两个版本的Queue模块命名不同，py3 queue 最清楚的Queue说明  廖雪峰的教程 董伟明的博客—进程 董伟明的博客—线程  put: 向队列中添加一个项。get: 从队列中删除并返回一个项。task_done: 当某一项任务完成时调用。join: 阻塞直到所有的项目都被处理完。 join 和 task_doneps：task_done中的任务是指get任务，put方法不需要调">
+<meta name="twitter:description" content="py2和3两个版本的Queue模块命名不同，py3 queue 最清楚的Queue说明  廖雪峰的教程 董伟明的博客—进程 董伟明的博客—线程  put: 向队列中添加一个项。get: 从队列中删除并返回一个项。task_done: 当某一项任务完成时调用。join: 阻塞直到所有的项目都被处理完。">
 
 
 
@@ -328,7 +328,8 @@
 <li><a href="http://www.dongwm.com/archives/使用Python进行并发编程-线程篇/" target="_blank" rel="noopener">董伟明的博客—线程</a></li>
 </ul>
 <p>put: 向队列中添加一个项。<br>get: 从队列中删除并返回一个项。<br>task_done: 当某一项任务完成时调用。<br>join: 阻塞直到所有的项目都被处理完。</p>
-<h3 id="join-和-task-done"><a href="#join-和-task-done" class="headerlink" title="join 和 task_done"></a>join 和 task_done</h3><p>ps：task_done中的任务是指get任务，put方法不需要调用<br>注意：multiprocessing.JoinableQueue 实现task_done和join方法，另外还有multiprocessing.Queue类<br>在主线程中使用了 queue.join()，导致主线程阻塞。queue.task_done() 表示完成一个 task，并递减没有完成的队列数，当队列全部完成时候，没有task可执行，因此需要发送一个信号，通知被阻塞的主线程，继续运行。</p>
+<a id="more"></a>
+<p>ps：task_done中的任务是指get任务，put方法不需要调用<br>注意：multiprocessing.JoinableQueue 实现task_done和join方法，另外还有multiprocessing.Queue类<br>在主线程中使用了 queue.join()，导致主线程阻塞。queue.task_done() 表示完成一个 task，并递减没有完成的队列数，当队列全部完成时候，没有task可执行，因此需要发送一个信号，通知被阻塞的主线程，继续运行。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">worker</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        item = q.get()</span><br><span class="line">        <span class="keyword">if</span> item <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        do_work(item)</span><br><span class="line">        q.task_done()</span><br><span class="line"><span class="comment"># Each worker loops infinitely, always looking for something new from the Queue. If the item it gets is None, it breaks and returns control to main.</span></span><br><span class="line"><span class="comment"># So, first we make the program wait for the Queue to be empty. Each call to q.task_done() marks a new item as complete. The code hangs on the following so we make sure every item is marked as done.</span></span><br><span class="line">q = queue.Queue()</span><br><span class="line">threads = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(num_worker_threads):</span><br><span class="line">    t = threading.Thread(target=worker)</span><br><span class="line">    t.start()</span><br><span class="line">    threads.append(t)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> source():</span><br><span class="line">    q.put(item)</span><br><span class="line"></span><br><span class="line"><span class="comment"># block until all tasks are done</span></span><br><span class="line">q.join()</span><br><span class="line"><span class="comment"># stop workers</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(num_worker_threads):</span><br><span class="line">    q.put(<span class="keyword">None</span>)</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> threads:</span><br><span class="line">    t.join()</span><br></pre></td></tr></table></figure>
 <p>join &amp; task_done</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> queue</span><br><span class="line"></span><br><span class="line">q = queue.Queue(<span class="number">2</span>)</span><br><span class="line">q.put(<span class="number">15</span>)</span><br><span class="line">q.put(<span class="number">59</span>)</span><br></pre></td></tr></table></figure>
@@ -451,17 +452,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -498,7 +490,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -521,22 +513,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#join-和-task-done"><span class="nav-number">1.</span> <span class="nav-text">join 和 task_done</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
