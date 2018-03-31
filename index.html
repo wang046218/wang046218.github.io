@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2018/03/29/django-xadmin/">
+    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2018/10/23/python/time/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZJ wang">
@@ -252,7 +252,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/29/django-xadmin/" itemprop="url">django-xadmin 踩坑记</a></h1>
+                <a class="post-title-link" href="/2018/10/23/python/time/" itemprop="url">time模块</a></h1>
         
 
         <div class="post-meta">
@@ -264,8 +264,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-29T18:26:08+08:00">
-                2018-03-29
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-23T00:00:00+08:00">
+                2018-10-23
               </time>
             
 
@@ -287,8 +287,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/django/" itemprop="url" rel="index">
-                    <span itemprop="name">django</span>
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
                   </a>
                 </span>
 
@@ -326,9 +326,511 @@
       
         
           
-            <p>吐槽一点: 项目主页的文档链接打不开</p>
-<p>## </p>
-<h2 id="app中的xamdin"><a href="#app中的xamdin" class="headerlink" title="app中的xamdin"></a>app中的xamdin</h2><p>文件命名: adminx.py</p>
+            <h2 id="time"><a href="#time" class="headerlink" title="time"></a>time</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(time.time())  <span class="comment"># 返回一个浮点数表示的秒数（时间戳）</span></span><br><span class="line"><span class="comment">#time.sleep(3) # 休眠秒数，并不精确</span></span><br><span class="line"><span class="comment">#time.clock() # 平台有关，不推荐使用</span></span><br><span class="line">print(time.ctime(<span class="number">34355</span>)) <span class="comment"># 将秒数转换为结构化时间, 默认返回当前时间</span></span><br></pre></td></tr></table></figure>
+<pre><code>1514401531.88116
+Thu Jan  1 17:32:35 1970
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(time.gmtime())  <span class="comment"># 返回结构化时间（国际时间）可选参数为时间戳</span></span><br></pre></td></tr></table></figure>
+<pre><code>time.struct_time(tm_year=2017, tm_mon=12, tm_mday=27, tm_hour=18, tm_min=26, tm_sec=35, tm_wday=2, tm_yday=361, tm_isdst=0)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(time.localtime())  <span class="comment"># 当地时间，结构化时间（本地时间）</span></span><br><span class="line"><span class="comment"># time.mktime(t) # 将格式化时间转换为秒数，返回的是本地时间，返回utc时间使用calendar.timegm()</span></span><br><span class="line"><span class="comment"># 通过tm_year属性访问其中的值</span></span><br></pre></td></tr></table></figure>
+<pre><code>time.struct_time(tm_year=2017, tm_mon=12, tm_mday=28, tm_hour=2, tm_min=28, tm_sec=7, tm_wday=3, tm_yday=362, tm_isdst=0)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 结构化时间与自定义格式时间字符串的互换</span></span><br><span class="line"><span class="comment">#   strftime() -- convert time tuple to string according to format specification 结构化时间--&gt;字符串</span></span><br><span class="line"><span class="comment">#   strptime() -- parse string to time tuple according to format specification  字符串----&gt;结构化时间</span></span><br><span class="line">now = time.localtime()</span><br><span class="line">print(time.strftime(<span class="string">'%Y年(全)/%y(简)--%m月(%B-全%b-简)--%d日:%H时(24制)-%I(12制)--%M分--%S秒 %a %A 周几'</span>, now))  <span class="comment"># 第二个参数可选（时间戳），默认为当前时间</span></span><br></pre></td></tr></table></figure>
+<pre><code>2017年(全)/17(简)--12月(December-全Dec-简)--28日:02时(24制)-02(12制)--49分--52秒 Thu Thursday 周几
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(time.strftime(<span class="string">'%c'</span>,now)) <span class="comment">#  通过%x %X可以单独显示日期和时间</span></span><br><span class="line">print(time.strftime(<span class="string">'日期%x----时间%X'</span>,now))</span><br></pre></td></tr></table></figure>
+<pre><code>Thu Dec 28 02:49:52 2017
+12/28/17----02:49:52
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(time.strptime(<span class="string">'2017-12-14 19:24:34 Thu'</span>, <span class="string">'%Y-%m-%d %H:%M:%S %a'</span>)) <span class="comment"># strptime(string, format)</span></span><br></pre></td></tr></table></figure>
+<pre><code>time.struct_time(tm_year=2017, tm_mon=12, tm_mday=14, tm_hour=19, tm_min=24, tm_sec=34, tm_wday=3, tm_yday=348, tm_isdst=-1)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(help(time))</span><br></pre></td></tr></table></figure>
+<pre><code>Help on built-in module time:
+
+NAME
+    time - This module provides various functions to manipulate time values.
+
+DESCRIPTION
+    There are two standard representations of time.  One is the number
+    of seconds since the Epoch, in UTC (a.k.a. GMT).  It may be an integer
+    or a floating point number (to represent fractions of seconds).
+    The Epoch is system-defined; on Unix, it is generally January 1st, 1970.
+    The actual value can be retrieved by calling gmtime(0).
+
+    The other representation is a tuple of 9 integers giving local time.
+    The tuple items are:
+      year (including century, e.g. 1998)
+      month (1-12)
+      day (1-31)
+      hours (0-23)
+      minutes (0-59)
+      seconds (0-59)
+      weekday (0-6, Monday is 0)
+      Julian day (day in the year, 1-366)
+      DST (Daylight Savings Time) flag (-1, 0 or 1)
+    If the DST flag is 0, the time is given in the regular time zone;
+    if it is 1, the time is given in the DST time zone;
+    if it is -1, mktime() should guess based on the date and time.
+
+    Variables:
+
+    timezone -- difference in seconds between UTC and local standard time
+    altzone -- difference in  seconds between UTC and local DST time
+    daylight -- whether local time should reflect DST
+    tzname -- tuple of (standard time zone name, DST time zone name)
+
+    Functions:
+
+    time() -- return current time in seconds since the Epoch as a float
+    clock() -- return CPU time since process start as a float
+    sleep() -- delay for a number of seconds given as a float
+    gmtime() -- convert seconds since Epoch to UTC tuple
+    localtime() -- convert seconds since Epoch to local time tuple
+    asctime() -- convert time tuple to string
+    ctime() -- convert time in seconds to string
+    mktime() -- convert local time tuple to seconds since Epoch
+    strftime() -- convert time tuple to string according to format specification
+    strptime() -- parse string to time tuple according to format specification
+    tzset() -- change the local timezone
+
+CLASSES
+    builtins.tuple(builtins.object)
+        struct_time
+
+    class struct_time(builtins.tuple)
+     |  The time value as returned by gmtime(), localtime(), and strptime(), and
+     |  accepted by asctime(), mktime() and strftime().  May be considered as a
+     |  sequence of 9 integers.
+     |
+     |  Note that several fields&apos; values are not the same as those defined by
+     |  the C language standard for struct tm.  For example, the value of the
+     |  field tm_year is the actual year, not year - 1900.  See individual
+     |  fields&apos; descriptions for details.
+     |
+     |  Method resolution order:
+     |      struct_time
+     |      builtins.tuple
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __new__(*args, **kwargs) from builtins.type
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |
+     |  __reduce__(...)
+     |      helper for pickle
+     |
+     |  __repr__(self, /)
+     |      Return repr(self).
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  tm_gmtoff
+     |      offset from UTC in seconds
+     |
+     |  tm_hour
+     |      hours, range [0, 23]
+     |
+     |  tm_isdst
+     |      1 if summer time is in effect, 0 if not, and -1 if unknown
+     |
+     |  tm_mday
+     |      day of month, range [1, 31]
+     |
+     |  tm_min
+     |      minutes, range [0, 59]
+     |
+     |  tm_mon
+     |      month of year, range [1, 12]
+     |
+     |  tm_sec
+     |      seconds, range [0, 61])
+     |
+     |  tm_wday
+     |      day of week, range [0, 6], Monday is 0
+     |
+     |  tm_yday
+     |      day of year, range [1, 366]
+     |
+     |  tm_year
+     |      year, for example, 1993
+     |
+     |  tm_zone
+     |      abbreviation of timezone name
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  n_fields = 11
+     |
+     |  n_sequence_fields = 9
+     |
+     |  n_unnamed_fields = 0
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from builtins.tuple:
+     |
+     |  __add__(self, value, /)
+     |      Return self+value.
+     |
+     |  __contains__(self, key, /)
+     |      Return key in self.
+     |
+     |  __eq__(self, value, /)
+     |      Return self==value.
+     |
+     |  __ge__(self, value, /)
+     |      Return self&gt;=value.
+     |
+     |  __getattribute__(self, name, /)
+     |      Return getattr(self, name).
+     |
+     |  __getitem__(self, key, /)
+     |      Return self[key].
+     |
+     |  __getnewargs__(...)
+     |
+     |  __gt__(self, value, /)
+     |      Return self&gt;value.
+     |
+     |  __hash__(self, /)
+     |      Return hash(self).
+     |
+     |  __iter__(self, /)
+     |      Implement iter(self).
+     |
+     |  __le__(self, value, /)
+     |      Return self&lt;=value.
+     |
+     |  __len__(self, /)
+     |      Return len(self).
+     |
+     |  __lt__(self, value, /)
+     |      Return self&lt;value.
+     |
+     |  __mul__(self, value, /)
+     |      Return self*value.n
+     |
+     |  __ne__(self, value, /)
+     |      Return self!=value.
+     |
+     |  __rmul__(self, value, /)
+     |      Return self*value.
+     |
+     |  count(...)
+     |      T.count(value) -&gt; integer -- return number of occurrences of value
+     |
+     |  index(...)
+     |      T.index(value, [start, [stop]]) -&gt; integer -- return first index of value.
+     |      Raises ValueError if the value is not present.
+
+FUNCTIONS
+    asctime(...)
+        asctime([tuple]) -&gt; string
+
+        Convert a time tuple to a string, e.g. &apos;Sat Jun 06 16:26:11 1998&apos;.
+        When the time tuple is not present, current time as returned by localtime()
+        is used.
+
+    clock(...)
+        clock() -&gt; floating point number
+
+        Return the CPU time or real time since the start of the process or since
+        the first call to clock().  This has as much precision as the system
+        records.
+
+    ctime(...)
+        ctime(seconds) -&gt; string
+
+        Convert a time in seconds since the Epoch to a string in local time.
+        This is equivalent to asctime(localtime(seconds)). When the time tuple is
+        not present, current time as returned by localtime() is used.
+
+    get_clock_info(...)
+        get_clock_info(name: str) -&gt; dict
+
+        Get information of the specified clock.
+
+    gmtime(...)
+        gmtime([seconds]) -&gt; (tm_year, tm_mon, tm_mday, tm_hour, tm_min,
+                               tm_sec, tm_wday, tm_yday, tm_isdst)
+
+        Convert seconds since the Epoch to a time tuple expressing UTC (a.k.a.
+        GMT).  When &apos;seconds&apos; is not passed in, convert the current time instead.
+
+        If the platform supports the tm_gmtoff and tm_zone, they are available as
+        attributes only.
+
+    localtime(...)
+        localtime([seconds]) -&gt; (tm_year,tm_mon,tm_mday,tm_hour,tm_min,
+                                  tm_sec,tm_wday,tm_yday,tm_isdst)
+
+        Convert seconds since the Epoch to a time tuple expressing local time.
+        When &apos;seconds&apos; is not passed in, convert the current time instead.
+
+    mktime(...)
+        mktime(tuple) -&gt; floating point number
+
+        Convert a time tuple in local time to seconds since the Epoch.
+        Note that mktime(gmtime(0)) will not generally return zero for most
+        time zones; instead the returned value will either be equal to that
+        of the timezone or altzone attributes on the time module.
+
+    monotonic(...)
+        monotonic() -&gt; float
+
+        Monotonic clock, cannot go backward.
+
+    perf_counter(...)
+        perf_counter() -&gt; float
+
+        Performance counter for benchmarking.
+
+    process_time(...)
+        process_time() -&gt; float
+
+        Process time for profiling: sum of the kernel and user-space CPU time.
+
+    sleep(...)
+        sleep(seconds)
+
+        Delay execution for a given number of seconds.  The argument may be
+        a floating point number for subsecond precision.
+
+    strftime(...)
+        strftime(format[, tuple]) -&gt; string
+
+        Convert a time tuple to a string according to a format specification.
+        See the library reference manual for formatting codes. When the time tuple
+        is not present, current time as returned by localtime() is used.
+
+        Commonly used format codes:
+
+        %Y  Year with century as a decimal number.
+        %m  Month as a decimal number [01,12].
+        %d  Day of the month as a decimal number [01,31].
+        %H  Hour (24-hour clock) as a decimal number [00,23].
+        %M  Minute as a decimal number [00,59].
+        %S  Second as a decimal number [00,61].
+        %z  Time zone offset from UTC.
+        %a  Locale&apos;s abbreviated weekday name.
+        %A  Locale&apos;s full weekday name.
+        %b  Locale&apos;s abbreviated month name.
+        %B  Locale&apos;s full month name.
+        %c  Locale&apos;s appropriate date and time representation.
+        %I  Hour (12-hour clock) as a decimal number [01,12].
+        %p  Locale&apos;s equivalent of either AM or PM.
+
+        Other codes may be available on your platform.  See documentation for
+        the C library strftime function.
+
+    strptime(...)
+        strptime(string, format) -&gt; struct_time
+
+        Parse a string to a time tuple according to a format specification.
+        See the library reference manual for formatting codes (same as
+        strftime()).
+
+        Commonly used format codes:
+
+        %Y  Year with century as a decimal number.
+        %m  Month as a decimal number [01,12].
+        %d  Day of the month as a decimal number [01,31].
+        %H  Hour (24-hour clock) as a decimal number [00,23].
+        %M  Minute as a decimal number [00,59].
+        %S  Second as a decimal number [00,61].
+        %z  Time zone offset from UTC.
+        %a  Locale&apos;s abbreviated weekday name.
+        %A  Locale&apos;s full weekday name.
+        %b  Locale&apos;s abbreviated month name.
+        %B  Locale&apos;s full month name.
+        %c  Locale&apos;s appropriate date and time representation.
+        %I  Hour (12-hour clock) as a decimal number [01,12].
+        %p  Locale&apos;s equivalent of either AM or PM.
+
+        Other codes may be available on your platform.  See documentation for
+        the C library strftime function.
+
+    time(...)
+        time() -&gt; floating point number
+
+        Return the current time in seconds since the Epoch.
+        Fractions of a second may be present if the system clock provides them.
+
+    tzset(...)
+        tzset()
+
+        Initialize, or reinitialize, the local timezone to the value stored in
+        os.environ[&apos;TZ&apos;]. The TZ environment variable should be specified in
+        standard Unix timezone format as documented in the tzset man page
+        (eg. &apos;US/Eastern&apos;, &apos;Europe/Amsterdam&apos;). Unknown timezones will silently
+        fall back to UTC. If the TZ environment variable is not set, the local
+        timezone is set to the systems best guess of wallclock time.
+        Changing the TZ environment variable without calling tzset *may* change
+        the local timezone used by methods such as localtime, but this behaviour
+        should not be relied on.
+
+DATA
+    altzone = -7200
+    daylight = 0
+    timezone = -7200
+    tzname = (&apos;EET&apos;, &apos;EET&apos;)
+
+FILE
+    (built-in)
+
+
+None
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2018/03/12/tools/git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZJ wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Withrainy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/12/tools/git/" itemprop="url">电脑绑定多个github账号</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T00:00:00+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="电脑绑定多个github账号"><a href="#电脑绑定多个github账号" class="headerlink" title="电脑绑定多个github账号"></a>电脑绑定多个github账号</h2><p>对不同的账号使用不同的ssh-key</p>
+<p>不同的github账号对应不同的ssh-key（具体生成key的过程以及github配置略)</p>
+<p>在ssh根目录新建config文件</p>
+<pre><code><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Default GitHub</span></span><br><span class="line">Host github.com</span><br><span class="line">HostName github.com</span><br><span class="line">User git</span><br><span class="line">IdentityFile ~/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 第二个配置</span></span><br><span class="line">Host github-<span class="keyword">as</span> <span class="comment">#这是别名，区别第一个(会多次使用)</span></span><br><span class="line">HostName github.com</span><br><span class="line">User git</span><br><span class="line">IdentityFile ~/.ssh/id_rsa_as <span class="comment">#(这里是新的key)</span></span><br></pre></td></tr></table></figure>
+</code></pre><p>测试<code>ssh -T github-as</code><br>对仓库进行用户名和邮箱设置</p>
+<pre><code>`git config --global--unset user.name`
+`git config --global--unset user.email`
+`git config user.name &quot;name&quot;`
+`git config user.email &quot;email&quot;`
+</code></pre><p>对仓库进行url重置<br><code>git remote set-url origin github-as:username/jib.git</code></p>
+<p><a href="http://blog.leanote.com/post/gm8300130/Day-59-Git-ERROR-Permission-to-XXX.git-denied-to-user" target="_blank" rel="noopener">参考链接</a><br><a href="http://zwb.io/2016/03/16/%E4%B8%80%E5%8F%B0%E7%94%B5%E8%84%91%E7%BB%91%E5%AE%9A%E4%B8%A4%E4%B8%AAgithub%E5%B8%90%E5%8F%B7%E6%95%99%E7%A8%8B/" target="_blank" rel="noopener">配置用户名</a></p>
 
           
         
@@ -377,7 +879,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2018/03/29/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2018/01/15/python/threading/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZJ wang">
@@ -396,7 +898,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/29/hello-world/" itemprop="url">Hello World</a></h1>
+                <a class="post-title-link" href="/2018/01/15/python/threading/" itemprop="url">python中的线程和进程</a></h1>
         
 
         <div class="post-meta">
@@ -408,8 +910,542 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-29T15:46:43+08:00">
-                2018-03-29
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-15T00:00:00+08:00">
+                2018-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="python中的线程和进程"><a href="#python中的线程和进程" class="headerlink" title="python中的线程和进程"></a>python中的线程和进程</h1><ul>
+<li><a href="http://www.cnblogs.com/yuanchenqi/articles/5733873.html" target="_blank" rel="noopener">csdn博客:Py西游攻关之多线程(threading模块)</a></li>
+<li><a href="http://codingpy.com/article/python-201-a-tutorial-on-threads/" target="_blank" rel="noopener">部分概念可以参考:一文学会 Python 多线程编程</a></li>
+<li><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143192823818768cd506abbc94eb5916192364506fa5d000" target="_blank" rel="noopener">廖雪峰python3教程</a></li>
+<li><a href="http://www.cnblogs.com/yuanchenqi/articles/5745958.html" target="_blank" rel="noopener">csdn:进程</a></li>
+</ul>
+<h2 id="threading"><a href="#threading" class="headerlink" title="threading"></a>threading</h2><p>threading模块定义了多个函数</p>
+<ul>
+<li>threading.current_thread() 得到当前线程</li>
+<li>threading.active_count()</li>
+<li>threading.enumerate() 返回当前存活线程的迭代对象</li>
+</ul>
+<p>thread 模块提供的其他方法：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># threading.currentThread(): 返回当前的线程变量。</span></span><br><span class="line"><span class="comment"># threading.enumerate(): 返回一个包含正在运行的线程的list。正在运行指线程启动后、结束前，不包括启动前和终止后的线程。</span></span><br><span class="line"><span class="comment"># threading.activeCount(): 返回正在运行的线程数量，与len(threading.enumerate())有相同的结果。</span></span><br><span class="line"><span class="comment"># 除了使用方法外，线程模块同样提供了Thread类来处理线程，Thread类提供了以下方法:</span></span><br><span class="line"><span class="comment"># run(): 用以表示线程活动的方法。</span></span><br><span class="line"><span class="comment"># start():启动线程活动。</span></span><br><span class="line"><span class="comment"># join([time]): 等待至线程中止。这阻塞调用线程直至线程的join() 方法被调用中止-正常退出或者抛出未处理的异常-或者是可选的超时发生。</span></span><br><span class="line"><span class="comment"># isAlive(): 返回线程是否活动的。</span></span><br><span class="line"><span class="comment"># getName(): 返回线程名。</span></span><br><span class="line"><span class="comment"># setName(): 设置线程名。</span></span><br></pre></td></tr></table></figure>
+<h3 id="调用线程的两种方法"><a href="#调用线程的两种方法" class="headerlink" title="调用线程的两种方法"></a>调用线程的两种方法</h3><ol>
+<li>自定义函数作为threading.Thread类的构造参数</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(n)</span>:</span></span><br><span class="line">    print(<span class="string">'foo in running, arg is %s\n'</span> % str(n))</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bar</span><span class="params">(m)</span>:</span></span><br><span class="line">    print(<span class="string">'bar in running, arg is %s\n'</span> % str(m))</span><br><span class="line">    time.sleep(<span class="number">2</span>) <span class="comment">#模拟io</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 函数作为Thread类构造方法的target参数，args传参（tuple）</span></span><br><span class="line">t1 = threading.Thread(target=foo, args=(<span class="number">1</span>,), name=<span class="string">'foo'</span>)</span><br><span class="line">t2 = threading.Thread(target=bar, args=(<span class="number">2</span>,), name=<span class="string">'bar'</span>)</span><br><span class="line">begin = time.time()</span><br><span class="line">t1.start() <span class="comment"># 启动线程</span></span><br><span class="line">t2.start()</span><br><span class="line">print(time.time() - begin, end=<span class="string">'\n'</span>)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>继承threading.Thread</li>
+</ol>
+<p>继承Thread类，override父类的<code>__init__</code>和<code>run</code>方法</p>
+<p>The Thread class represents an activity that is run in a separate thread of control. There are two ways to specify the activity: by passing a callable object to the constructor, or by overriding the run() method in a subclass. No other methods (except for the constructor) should be overridden in a subclass. In other words, only override the <code>__init__()</code> and run() methods of this class.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">        <span class="comment"># 这里执行操作，获取锁，释放锁等等</span></span><br><span class="line">    <span class="comment"># 父类的__init__方法</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, group=None, target=None, name=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                     args=<span class="params">()</span>, kwargs=None, *, daemon=None)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="comment">#可以这样定义</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args)</span>:</span></span><br><span class="line">        threading.Thread.__init__(self)</span><br><span class="line">        <span class="comment"># 做其他操作，比如定义线程name等</span></span><br></pre></td></tr></table></figure>
+<h3 id="join和setDaemon"><a href="#join和setDaemon" class="headerlink" title="join和setDaemon"></a>join和setDaemon</h3><p>主线程结束后，子线程还在运行，join方法使得主线程等到子线程结束时才退出。<br>ps：主线程结束，进程未结束，join方法定义了线程结束的顺序，主线程必须在定义了join方法的子线程结束之后再结束</p>
+<p>设置守护线程<code>threading.Thread().setDaemon(bool值)</code><br>默认位False，所有线程结束之后进程退出。对于<code>setDaemon（True)</code>的线程，进程不再等待该线程正常结束，其他非守护线程结束之后不关心守护线程是否执行完毕，直接退出进程，结束程序。<br>必须在线程start之前设置</p>
+<h3 id="线程间数据共享"><a href="#线程间数据共享" class="headerlink" title="线程间数据共享"></a>线程间数据共享</h3><p>资源锁 Lock and RLock<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">l = threading.Lock()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">workon</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> num</span><br><span class="line">    <span class="keyword">with</span> l: <span class="comment"># 使用上下文管理器管理 也可以使用try finally</span></span><br><span class="line">        <span class="comment"># 对num进行操作</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">workin</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> num</span><br><span class="line">    l.acquire()</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 对公共数据进行操作</span></span><br><span class="line">    <span class="keyword">finally</span>：</span><br><span class="line">        l.release</span><br></pre></td></tr></table></figure></p>
+<p>在线程间共享多个资源的时候，如果两个线程分别占有一部分资源并且同时等待对方的资源，就会造成死锁<br> 避免死锁，使用递归锁（可重用锁）</p>
+<p> threading.RLock() 类内部有一个计数器，acquire和release必须成对出现，即调用了n次acquire，必须调用n次的release才能真正释放所占用的琐。</p>
+<p> 多个线程调用main()方法，而main方法在内部调用的函数也使用了锁，有多层锁，只有一个线程中的所有锁都释放，共享数据才能被其他线程使用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line">total = <span class="number">0</span></span><br><span class="line">lock = threading.RLock()  <span class="comment"># 重用锁</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">do_something</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> lock:</span><br><span class="line">        print(<span class="string">'Lock acquired in the do_something function'</span>)</span><br><span class="line">    print(<span class="string">'Lock released in the do_something function'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Done doing something"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">do_something_else</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">with</span> lock:</span><br><span class="line">        print(<span class="string">'Lock acquired in the do_something_else function'</span>)</span><br><span class="line">    print(<span class="string">'Lock released in the do_something_else function'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Finished something else"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">with</span> lock:</span><br><span class="line">        result_one = do_something()</span><br><span class="line">        result_two = do_something_else()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> (result_one)</span><br><span class="line">    <span class="keyword">print</span> (result_two)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br><span class="line">    <span class="comment"># 这里可以对main进行多线程操作</span></span><br></pre></td></tr></table></figure>
+<h3 id="信号量（Semaphore）"><a href="#信号量（Semaphore）" class="headerlink" title="信号量（Semaphore）"></a>信号量（Semaphore）</h3><p>并行锁（区别于RLock的递归）,<br><code>threading.BoundedSemaphore(value=1)</code> 提供类似线程池的并行锁<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> semaphore.acquire():</span><br><span class="line">            time.sleep(<span class="number">2</span>)</span><br><span class="line">            semaphore.release()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    semaphore = threading.BoundedSemaphore(<span class="number">4</span>)</span><br><span class="line">    tasks = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">        tasks.append(MyThread())</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> tasks:</span><br><span class="line">        j.start()</span><br></pre></td></tr></table></figure></p>
+<h3 id="条件变量同步（Condition）"><a href="#条件变量同步（Condition）" class="headerlink" title="条件变量同步（Condition）"></a>条件变量同步（Condition）</h3><p>有一类线程需要满足条件之后才能够继续执行，Python提供了threading.Condition 对象用于条件变量线程的支持，它除了能提供RLock()或Lock()的方法外，还提供了 wait()、notify()、notifyAll()方法。</p>
+<ul>
+<li>wait()：条件不满足时调用，线程会释放锁并进入等待阻塞；</li>
+<li>notify()：条件创造后调用，通知等待池激活一个线程；（当有多个线程wait时，激活线程随机，–待验证）</li>
+<li>notifyAll()：条件创造后调用，通知等待池激活所有线程。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 结束wait等待时继续执行时,从wait下一行代码继续执行</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">global</span> baozi</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">            print(<span class="string">'product'</span>)</span><br><span class="line">            <span class="keyword">if</span> lock_on.acquire():</span><br><span class="line">                baozi.append(<span class="string">'baozi'</span>)</span><br><span class="line">                print(<span class="string">'生成了一个包子'</span>)</span><br><span class="line">                lock_on.notifyAll()</span><br><span class="line">                print(<span class="string">'通知开始'</span>)</span><br><span class="line">                lock_on.release()</span><br><span class="line">            time.sleep(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Consumer</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">global</span> baozi</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">            print(<span class="string">'3准备获取锁'</span>)</span><br><span class="line">            lock_on.acquire()</span><br><span class="line">            print(<span class="string">'3获取到了锁'</span>)</span><br><span class="line">            <span class="keyword">if</span> len(baozi) == <span class="number">0</span>:</span><br><span class="line">                print(<span class="string">'3进入等待'</span>)</span><br><span class="line">                lock_on.wait()  <span class="comment"># 释放锁</span></span><br><span class="line">            print(<span class="string">'3consumer eat baozi'</span>)</span><br><span class="line">            <span class="keyword">del</span> baozi[<span class="number">0</span>]</span><br><span class="line">            lock_on.release()</span><br><span class="line">            time.sleep(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    lock_on = threading.Condition() <span class="comment">#默认RLock</span></span><br><span class="line">    baozi = []</span><br><span class="line">    tasks = []</span><br><span class="line">    tasks.append(Consumer())</span><br><span class="line">    tasks.append(Product())</span><br><span class="line">    <span class="keyword">for</span> task <span class="keyword">in</span> tasks:</span><br><span class="line">        task.start()</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="同步条件（Event）"><a href="#同步条件（Event）" class="headerlink" title="同步条件（Event）"></a>同步条件（Event）</h3><p>条件同步和条件变量同步差不多意思，只是少了锁功能，因为条件同步设计于不访问共享资源的条件环境。初始设计值为False</p>
+<ul>
+<li>event.isSet()：返回event的状态值；</li>
+<li>event.wait()：如果 event.isSet()==False将阻塞线程；</li>
+<li>event.set()： 设置event的状态值为True，所有阻塞池的线程激活进入就绪状态， 等待操作系统调度；</li>
+<li>event.clear()：恢复event的状态值为False。</li>
+</ul>
+<h2 id="进程multiprocessing"><a href="#进程multiprocessing" class="headerlink" title="进程multiprocessing"></a>进程multiprocessing</h2><p>multiprocess中提供了和threading一样的api接口，进程类由multiprocess.Process类提供<br>避免子进程成为僵尸进程，对子进程调用join方法</p>
+<h3 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">info</span><span class="params">(name)</span>:</span></span><br><span class="line">    <span class="comment"># print(name)</span></span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line">    print(<span class="string">'hello'</span>, name, time.ctime())</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    p_list =[]</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">        p = Process(target=info, name=time.localtime().tm_sec, args=(<span class="string">'zjw'</span>,))</span><br><span class="line">        p_list.append(p)</span><br><span class="line">        p.start()</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> p_list:</span><br><span class="line">        p.join()</span><br><span class="line">    print(<span class="string">'end'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="类调用"><a href="#类调用" class="headerlink" title="类调用"></a>类调用</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 类式调用</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyProcess</span><span class="params">(Process)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super(MyProcess, self).__init__()</span><br><span class="line">        self.name = <span class="string">'wzj'</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'hello'</span>, self.name)</span><br><span class="line">        <span class="comment"># do something</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    p_list =[]</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">        p = MyProcess()</span><br><span class="line">        p_list.append(p)</span><br><span class="line">        p.start()</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> p_list:</span><br><span class="line">        p.join()</span><br><span class="line">    print(<span class="string">'end'</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>类Process</strong></p>
+<p>构造方法：<br><code>Process([group [, target [, name [, args [, kwargs]]]]])</code></p>
+<p>　　group: 线程组，目前还没有实现，库引用中提示必须是None</p>
+<p>　　target: 要执行的方法；</p>
+<p>　　name: 进程名；</p>
+<p>　　args/kwargs: 要传入方法的参数。</p>
+<p>实例方法：</p>
+<p>　　is_alive()：返回进程是否在运行。</p>
+<p>　　join([timeout])：阻塞当前上下文环境的进程程，直到调用此方法的进程终止或到达指定的timeout（可选参数）。</p>
+<p>　　start()：进程准备就绪，等待CPU调度</p>
+<p>　　run()：strat()调用run方法，如果实例进程时未制定传入target，这star执行t默认run()方法。</p>
+<p>　　terminate()：不管任务是否完成，立即停止工作进程</p>
+<p>属性：</p>
+<p>　　authkey</p>
+<p>　　daemon：和线程的setDeamon功能一样</p>
+<p>　　exitcode(进程在运行时为None、如果为–N，表示被信号N结束）</p>
+<p>　　name：进程名字</p>
+<p>　　pid：进程号</p>
+<h3 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a>进程间通信</h3><ul>
+<li>Queue</li>
+<li>Pipe</li>
+</ul>
+<p>-</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2018/01/02/python/基础汇总/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZJ wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Withrainy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/02/python/基础汇总/" itemprop="url">python中的一些知识点(持续更新)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-02T00:00:00+08:00">
+                2018-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="python知识点"><a href="#python知识点" class="headerlink" title="python知识点"></a>python知识点</h2><h3 id="1运算优先级-短路"><a href="#1运算优先级-短路" class="headerlink" title="1运算优先级(短路)"></a>1运算优先级(短路)</h3><p><a href="https://docs.python.org/3/reference/expressions.html#operator-precedence" target="_blank" rel="noopener">python.org官方文档</a></p>
+<p><img src="../images/Snipaste_py_precedence.png" alt="优先级"></p>
+<p>python中连续运算符问题<br><a href="https://stackoverflow.com/questions/9284350/why-does-1-in-1-0-true-evaluate-to-false" target="_blank" rel="noopener">Why does (1 in [1,0] == True) evaluate to False?]
+</a></p>
+<p><a href="https://stackoverflow.com/questions/31354429/why-is-true-is-false-false-false-in-python?noredirect=1&amp;lq=1" target="_blank" rel="noopener">Why is <code>True is False == False</code>, False in Python?</a></p>
+<p>总结–相同优先级运算符连用：</p>
+<p><strong>True == False == True</strong></p>
+<p>相当于</p>
+<p><strong>(True == False) and (False == True)</strong></p>
+<h3 id="2新式类和旧式类"><a href="#2新式类和旧式类" class="headerlink" title="2新式类和旧式类"></a>2新式类和旧式类</h3><p>py2中显示继承object类–object<br>py3默认就是新式类</p>
+<p>旧式类（mro-深度优先）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import inspect</span><br><span class="line">inspect.getmro(Foo)  # Foo:类</span><br></pre></td></tr></table></figure></p>
+<h3 id="python之禅"><a href="#python之禅" class="headerlink" title="python之禅"></a>python之禅</h3><p>在解释器中输入<code>import this</code>有惊喜</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">The Zen of Python, by Tim Peters</span><br><span class="line"></span><br><span class="line">Beautiful is better than ugly.</span><br><span class="line">Explicit is better than implicit.</span><br><span class="line">Simple is better than complex.</span><br><span class="line">Complex is better than complicated.</span><br><span class="line">Flat is better than nested.</span><br><span class="line">Sparse is better than dense.</span><br><span class="line">Readability counts.</span><br><span class="line">Special cases aren&apos;t special enough to break the rules.</span><br><span class="line">Although practicality beats purity.</span><br><span class="line">Errors should never pass silently.</span><br><span class="line">Unless explicitly silenced.</span><br><span class="line">In the face of ambiguity, refuse the temptation to guess.</span><br><span class="line">There should be one-- and preferably only one --obvious way to do it.</span><br><span class="line">Although that way may not be obvious at first unless you&apos;re Dutch.</span><br><span class="line">Now is better than never.</span><br><span class="line">Although never is often better than *right* now.</span><br><span class="line">If the implementation is hard to explain, it&apos;s a bad idea.</span><br><span class="line">If the implementation is easy to explain, it may be a good idea.</span><br><span class="line">Namespaces are one honking great idea -- let&apos;s do more of those!</span><br></pre></td></tr></table></figure>
+<h3 id="Foo-Bar"><a href="#Foo-Bar" class="headerlink" title="Foo/Bar"></a>Foo/Bar</h3><p>理解成张三李四就可以了</p>
+<h3 id="NOQA"><a href="#NOQA" class="headerlink" title="NOQA"></a>NOQA</h3><p><code>example = lambda: &#39;example&#39;  # noqa: E731</code><br>忽略代码检查<br><a href="http://flake8.pycqa.org/en/latest/user/violations.html#in-line-ignoring-errors" target="_blank" rel="noopener">文档在这里</a><br>Adding # noqa to a line indicates that the linter (a program that automatically checks code quality) should not check this line. Any warnings that code may have generated will be ignored.</p>
+<h3 id="pep是什么？"><a href="#pep是什么？" class="headerlink" title="pep是什么？"></a>pep是什么？</h3><p>PEP是Python Enhancement Proposal的首字母缩写，一组不断发展的标准文档</p>
+<p>pep0: 是所有PEP文档的Index。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2017/12/29/python/import/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZJ wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Withrainy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/29/python/import/" itemprop="url">python的相对引用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-29T00:00:00+08:00">
+                2017-12-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="python的相对引用"><a href="#python的相对引用" class="headerlink" title="python的相对引用"></a>python的相对引用</h2><h3 id="python-m-参数"><a href="#python-m-参数" class="headerlink" title="python -m 参数"></a>python -m 参数</h3><p><a href="https://www.napuzba.com/story/import-error-relative-no-parent/" target="_blank" rel="noopener">python -m参数</a>  有错误</p>
+<ul>
+<li>python dir/file.py 直接运行（将file.py的__name__属性设置’__main__‘)</li>
+<li>python dir.file 以模块的形式启动（这里的dir目录下必须包含__init__.py)</li>
+</ul>
+<p>会影响python进程的sys.path属性</p>
+<ul>
+<li>直接启动是把test.py文件所在的目录放到了sys.path属性中</li>
+<li>而模块启动是把你输入命令的目录（也就是当前路径），放到了sys.path属性中。</li>
+</ul>
+<p>两种启动方式中 __name__值的不同</p>
+<ul>
+<li>直接启动, __name__ == __main__</li>
+<li>模块启动, __name__ == file(文件名,和包的继承关系有关,module.module3.filename)</li>
+</ul>
+<p>注意：不管各种启动方式,作为python解释的第一个文件,其__name__属性必然是__main__,只有作为模块被其他py文件引用时的该属性才会体现包继承关系</p>
+<h3 id="模块的相对引用"><a href="#模块的相对引用" class="headerlink" title="模块的相对引用"></a>模块的相对引用</h3><p> <a href="https://www.napuzba.com/story/import-error-relative-no-parent/" target="_blank" rel="noopener">参考</a></p>
+<p> 报错信息：</p>
+<p><code>ImportError: attempted relative import with no known parent package</code></p>
+<h3 id="pyc文件与import"><a href="#pyc文件与import" class="headerlink" title="pyc文件与import"></a>pyc文件与import</h3><ul>
+<li>pyc文件对import的影响<br>import操作会先寻找pyc</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2017/12/21/python/Queue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZJ wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Withrainy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/21/python/Queue/" itemprop="url">python中的queue模块</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-21T00:00:00+08:00">
+                2017-12-21
               </time>
             
 
@@ -448,17 +1484,177 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+            <p>py2和3两个版本的Queue模块命名不同，py3 queue</p>
+<p><a href="https://docs.lvrui.io/2016/07/20/Python中先进先出队列queue的基本使用/" target="_blank" rel="noopener">最清楚的Queue说明</a></p>
+<ul>
+<li><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319272686365ecceaeca33428c914edf8f70cca383000" target="_blank" rel="noopener">廖雪峰的教程</a></li>
+<li><a href="http://www.dongwm.com/archives/使用Python进行并发编程-进程篇/" target="_blank" rel="noopener">董伟明的博客—进程</a></li>
+<li><a href="http://www.dongwm.com/archives/使用Python进行并发编程-线程篇/" target="_blank" rel="noopener">董伟明的博客—线程</a></li>
+</ul>
+<p>put: 向队列中添加一个项。<br>get: 从队列中删除并返回一个项。<br>task_done: 当某一项任务完成时调用。<br>join: 阻塞直到所有的项目都被处理完。</p>
+<h3 id="join-和-task-done"><a href="#join-和-task-done" class="headerlink" title="join 和 task_done"></a>join 和 task_done</h3><p>ps：task_done中的任务是指get任务，put方法不需要调用<br>注意：multiprocessing.JoinableQueue 实现task_done和join方法，另外还有multiprocessing.Queue类<br>在主线程中使用了 queue.join()，导致主线程阻塞。queue.task_done() 表示完成一个 task，并递减没有完成的队列数，当队列全部完成时候，没有task可执行，因此需要发送一个信号，通知被阻塞的主线程，继续运行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">worker</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        item = q.get()</span><br><span class="line">        <span class="keyword">if</span> item <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        do_work(item)</span><br><span class="line">        q.task_done()</span><br><span class="line"><span class="comment"># Each worker loops infinitely, always looking for something new from the Queue. If the item it gets is None, it breaks and returns control to main.</span></span><br><span class="line"><span class="comment"># So, first we make the program wait for the Queue to be empty. Each call to q.task_done() marks a new item as complete. The code hangs on the following so we make sure every item is marked as done.</span></span><br><span class="line">q = queue.Queue()</span><br><span class="line">threads = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(num_worker_threads):</span><br><span class="line">    t = threading.Thread(target=worker)</span><br><span class="line">    t.start()</span><br><span class="line">    threads.append(t)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> source():</span><br><span class="line">    q.put(item)</span><br><span class="line"></span><br><span class="line"><span class="comment"># block until all tasks are done</span></span><br><span class="line">q.join()</span><br><span class="line"><span class="comment"># stop workers</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(num_worker_threads):</span><br><span class="line">    q.put(<span class="keyword">None</span>)</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> threads:</span><br><span class="line">    t.join()</span><br></pre></td></tr></table></figure>
+<p>join &amp; task_done</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> queue</span><br><span class="line"></span><br><span class="line">q = queue.Queue(<span class="number">2</span>)</span><br><span class="line">q.put(<span class="number">15</span>)</span><br><span class="line">q.put(<span class="number">59</span>)</span><br></pre></td></tr></table></figure>
+<p>程序执行完这5行代码后会退出，退出前队列中还有值，退出后被清空</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> queue</span><br><span class="line"></span><br><span class="line">q = queue.Queue(<span class="number">2</span>)</span><br><span class="line">q.put(<span class="number">15</span>)</span><br><span class="line">q.put(<span class="number">59</span>)</span><br><span class="line"></span><br><span class="line">q.join()</span><br></pre></td></tr></table></figure>
+<p>程序会一直卡在第7行，只要队列中还有值，程序就不会退出<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> queue</span><br><span class="line"></span><br><span class="line">q = queue.Queue(<span class="number">2</span>)</span><br><span class="line">q.put(<span class="number">15</span>)</span><br><span class="line">q.put(<span class="number">59</span>)</span><br><span class="line"></span><br><span class="line">q.get()</span><br><span class="line">q.get()</span><br><span class="line"></span><br><span class="line">q.join()</span><br></pre></td></tr></table></figure></p>
+<p>队列中插入两个元素，后面取出了两个元素，执行后你会发现，程序还是卡在第10行的那个join代码<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> queue</span><br><span class="line"></span><br><span class="line">q = queue.Queue(<span class="number">2</span>)</span><br><span class="line">q.put(<span class="number">15</span>)</span><br><span class="line">q.put(<span class="number">59</span>)</span><br><span class="line"></span><br><span class="line">q.get()</span><br><span class="line">q.task_done()  <span class="comment"># get取完队列中的一个值后，使用task_done方法告诉队列，我已经取出了一个值并处理完毕</span></span><br><span class="line">q.get()</span><br><span class="line">q.task_done()</span><br><span class="line"></span><br><span class="line">q.join()</span><br></pre></td></tr></table></figure></p>
+<p>在每次get取值之后，还需要在跟队列声明一下，我已经取出了数据并处理完毕，这样执行到join代码的时候才不会被卡住</p>
 
           
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2017/10/06/agls/linkedlist_234/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZJ wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Withrainy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/06/agls/linkedlist_234/" itemprop="url">链表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-06T00:00:00+08:00">
+                2017-10-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>单链表</p>
+<ul>
+<li>146 LRU</li>
+<li>61 Rotate List</li>
+<li>23 merge k Sorted lists</li>
+<li>234 Palindrome Linked List 回文链表</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/06/agls/linkedlist_234/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -538,7 +1734,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -549,7 +1745,7 @@
               
               <div class="site-state-item site-state-categories">
                 
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">categories</span>
                 
               </div>
@@ -560,7 +1756,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
