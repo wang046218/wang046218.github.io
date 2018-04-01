@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="电脑绑定多个github账号对不同的账号使用不同的ssh-key 不同的github账号对应不同的ssh-key（具体生成key的过程以及github配置略) 在ssh根目录新建config文件 12345678910#Default GitHubHost github.comHostName github.comUser gitIdentityFile ~/.ssh/id_rsa# 第二个配置H">
+<meta name="description" content="对不同的账号使用不同的ssh-key 不同的github账号对应不同的ssh-key（具体生成key的过程以及github配置略) 在ssh根目录新建config文件 12345678910#Default GitHubHost github.comHostName github.comUser gitIdentityFile ~/.ssh/id_rsa# 第二个配置Host github-as">
 <meta name="keywords" content="GitHub,踩坑记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="电脑绑定多个github账号">
 <meta property="og:url" content="http://blog.zjwang.info/2018/03/12/tools/git/index.html">
 <meta property="og:site_name" content="Withrainy">
-<meta property="og:description" content="电脑绑定多个github账号对不同的账号使用不同的ssh-key 不同的github账号对应不同的ssh-key（具体生成key的过程以及github配置略) 在ssh根目录新建config文件 12345678910#Default GitHubHost github.comHostName github.comUser gitIdentityFile ~/.ssh/id_rsa# 第二个配置H">
+<meta property="og:description" content="对不同的账号使用不同的ssh-key 不同的github账号对应不同的ssh-key（具体生成key的过程以及github配置略) 在ssh根目录新建config文件 12345678910#Default GitHubHost github.comHostName github.comUser gitIdentityFile ~/.ssh/id_rsa# 第二个配置Host github-as">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-31T21:17:51.354Z">
+<meta property="og:updated_time" content="2018-04-01T09:37:36.271Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="电脑绑定多个github账号">
-<meta name="twitter:description" content="电脑绑定多个github账号对不同的账号使用不同的ssh-key 不同的github账号对应不同的ssh-key（具体生成key的过程以及github配置略) 在ssh根目录新建config文件 12345678910#Default GitHubHost github.comHostName github.comUser gitIdentityFile ~/.ssh/id_rsa# 第二个配置H">
+<meta name="twitter:description" content="对不同的账号使用不同的ssh-key 不同的github账号对应不同的ssh-key（具体生成key的过程以及github配置略) 在ssh根目录新建config文件 12345678910#Default GitHubHost github.comHostName github.comUser gitIdentityFile ~/.ssh/id_rsa# 第二个配置Host github-as">
 
 
 
@@ -342,7 +342,7 @@
       
 
       
-        <h2 id="电脑绑定多个github账号"><a href="#电脑绑定多个github账号" class="headerlink" title="电脑绑定多个github账号"></a>电脑绑定多个github账号</h2><p>对不同的账号使用不同的ssh-key</p>
+        <p>对不同的账号使用不同的ssh-key</p>
 <p>不同的github账号对应不同的ssh-key（具体生成key的过程以及github配置略)</p>
 <p>在ssh根目录新建config文件</p>
 <pre><code><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Default GitHub</span></span><br><span class="line">Host github.com</span><br><span class="line">HostName github.com</span><br><span class="line">User git</span><br><span class="line">IdentityFile ~/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 第二个配置</span></span><br><span class="line">Host github-<span class="keyword">as</span> <span class="comment">#这是别名，区别第一个(会多次使用)</span></span><br><span class="line">HostName github.com</span><br><span class="line">User git</span><br><span class="line">IdentityFile ~/.ssh/id_rsa_as <span class="comment">#(这里是新的key)</span></span><br></pre></td></tr></table></figure>
@@ -403,8 +403,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/15/python/threading/" rel="next" title="python中的线程和进程">
-                <i class="fa fa-chevron-left"></i> python中的线程和进程
+              <a href="/2018/02/27/agls/binary_search/" rel="next" title="二分搜索">
+                <i class="fa fa-chevron-left"></i> 二分搜索
               </a>
             
           </div>
@@ -463,17 +463,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -488,7 +479,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -499,7 +490,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -510,7 +501,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -533,22 +524,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#电脑绑定多个github账号"><span class="nav-number">1.</span> <span class="nav-text">电脑绑定多个github账号</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

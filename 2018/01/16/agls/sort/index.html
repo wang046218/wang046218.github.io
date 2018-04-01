@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法补全计划,排序,python," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="算法补齐计划 fishc排序总结 可以好好看看，对各种排序的比较  排序的稳定性 内排序和外排序 (排序记录是否全部放在内存中)  参考的文章/博客经典排序算法总结与实现 两张图（来自鱼c论坛） 主要排序算法分类主要算法复杂度比较具体分析在最开头的链接中 实现的内容  BubbleSort 冒泡排序  SelectSort 选择排序  InsertSort 插入排序  ShellSort 希尔排序">
+<meta name="keywords" content="算法补全计划,排序,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基本排序">
+<meta property="og:url" content="http://blog.zjwang.info/2018/01/16/agls/sort/index.html">
+<meta property="og:site_name" content="Withrainy">
+<meta property="og:description" content="算法补齐计划 fishc排序总结 可以好好看看，对各种排序的比较  排序的稳定性 内排序和外排序 (排序记录是否全部放在内存中)  参考的文章/博客经典排序算法总结与实现 两张图（来自鱼c论坛） 主要排序算法分类主要算法复杂度比较具体分析在最开头的链接中 实现的内容  BubbleSort 冒泡排序  SelectSort 选择排序  InsertSort 插入排序  ShellSort 希尔排序">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://blog.fishc.com/wp-content/uploads/2014/03/图片3.jpg">
+<meta property="og:image" content="http://blog.fishc.com/wp-content/uploads/2014/03/图片4.jpg">
+<meta property="og:image" content="http://wuchong.me/img/Insertion-sort-example-300px.gif">
+<meta property="og:updated_time" content="2018-04-01T10:04:25.716Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基本排序">
+<meta name="twitter:description" content="算法补齐计划 fishc排序总结 可以好好看看，对各种排序的比较  排序的稳定性 内排序和外排序 (排序记录是否全部放在内存中)  参考的文章/博客经典排序算法总结与实现 两张图（来自鱼c论坛） 主要排序算法分类主要算法复杂度比较具体分析在最开头的链接中 实现的内容  BubbleSort 冒泡排序  SelectSort 选择排序  InsertSort 插入排序  ShellSort 希尔排序">
+<meta name="twitter:image" content="http://blog.fishc.com/wp-content/uploads/2014/03/图片3.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.zjwang.info/2018/01/16/agls/sort/"/>
+
+
+
+
+
+  <title>基本排序 | Withrainy</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Withrainy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">日出霞田</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2018/01/16/agls/sort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZJ wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Withrainy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基本排序</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-16T00:00:00+08:00">
+                2018-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构与算法/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>算法补齐计划</p>
+<p><a href="http://blog.fishc.com/3259.html" target="_blank" rel="noopener">fishc排序总结</a> 可以好好看看，对各种排序的比较</p>
+<ul>
+<li>排序的稳定性</li>
+<li>内排序和外排序 (排序记录是否全部放在内存中)</li>
+</ul>
+<p>参考的文章/博客<br><a href="http://wuchong.me/blog/2014/02/09/algorithm-sort-summary/" target="_blank" rel="noopener">经典排序算法总结与实现</a></p>
+<p>两张图（来自鱼c论坛）</p>
+<p>主要排序算法分类<br><img src="http://blog.fishc.com/wp-content/uploads/2014/03/图片3.jpg" alt="主要排序算法"><br>主要算法复杂度比较<br><img src="http://blog.fishc.com/wp-content/uploads/2014/03/图片4.jpg" alt="算法比较"><br>具体分析在最开头的链接中</p>
+<h3 id="实现的内容"><a href="#实现的内容" class="headerlink" title="实现的内容"></a>实现的内容</h3><ul>
+<li style="list-style: none"><input type="checkbox" checked> BubbleSort 冒泡排序</li>
+<li style="list-style: none"><input type="checkbox" checked> SelectSort 选择排序</li>
+<li style="list-style: none"><input type="checkbox" checked> InsertSort 插入排序</li>
+<li style="list-style: none"><input type="checkbox" checked> ShellSort 希尔排序</li>
+<li style="list-style: none"><input type="checkbox" checked> MergeSort 归并排序</li>
+<li style="list-style: none"><input type="checkbox" checked> QuickSort 快速排序</li>
+<li style="list-style: none"><input type="checkbox" checked> HeadSort 堆排序</li>
+<li style="list-style: none"><input type="checkbox" checked> python 排序模块</li>
+</ul>
+<a id="more"></a>
+<h4 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h4><p><a href="https://github.com/wuchong/Algorithm-Interview/blob/master/Sort/python/BubbleSort.py" target="_blank" rel="noopener">参考链接：wuchon’github</a><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(array)</span>:</span></span><br><span class="line">    n = len(array)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n<span class="number">-1</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(n-i<span class="number">-1</span>):</span><br><span class="line">            <span class="keyword">if</span> array[j] &gt; array[j+<span class="number">1</span>]:</span><br><span class="line">                array[j], array[j+<span class="number">1</span>] = array[j+<span class="number">1</span>], array[j]</span><br><span class="line">    <span class="keyword">return</span> array</span><br></pre></td></tr></table></figure></p>
+<p>冒泡排序的优化</p>
+<ul>
+<li><p>当某一次内循环没有交换数据时说明数据已经有序，可以直接退出程序</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort_adv</span><span class="params">(array)</span>:</span></span><br><span class="line">    n = len(array)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        is_sorted = <span class="keyword">True</span></span><br><span class="line">        print(array[i])</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>, n-i):</span><br><span class="line">            <span class="keyword">if</span> array[j<span class="number">-1</span>] &gt; array[j]:</span><br><span class="line">                array[j<span class="number">-1</span>], array[j] = array[j], array[j<span class="number">-1</span>]</span><br><span class="line">                is_sorted = <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">if</span> is_sorted:</span><br><span class="line">            <span class="keyword">return</span> array</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>每次内循环最后一次交换数据的位置之后的数据都是有序的，因此更下一次内循环的次数</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort_adv_2</span><span class="params">(array)</span>:</span></span><br><span class="line">    n = len(array)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        is_sorted_index = n - i</span><br><span class="line">        is_sorted = <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>, is_sorted_index):</span><br><span class="line">            <span class="keyword">if</span> array[j<span class="number">-1</span>] &gt; array[j]:</span><br><span class="line">                array[j<span class="number">-1</span>], array[j] = array[j], array[j<span class="number">-1</span>]</span><br><span class="line">                is_sorted = <span class="keyword">False</span></span><br><span class="line">                is_sorted_index = j</span><br><span class="line">        <span class="keyword">if</span> is_sorted:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> array</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><p>步骤：</p>
+<ol>
+<li>在未排序序列中找到最小（大）元素，存放到排序序列的起始位置。</li>
+<li>再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。</li>
+<li>以此类推，直到所有元素均排序完毕。<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">select_sort</span><span class="params">(array)</span>:</span></span><br><span class="line">    n = len(array)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n<span class="number">-1</span>):</span><br><span class="line">        min = i</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>, n):</span><br><span class="line">            <span class="keyword">if</span> array[min] &gt; array[j]:</span><br><span class="line">                min = j</span><br><span class="line">        <span class="keyword">if</span> min != i:</span><br><span class="line">            array[i], array[min] = array[min], array[i]</span><br><span class="line">    <span class="keyword">return</span> array</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>优化方法，暂未发现</p>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><p>在原数组上进行<br>原理盗图一张<br><img src="http://wuchong.me/img/Insertion-sort-example-300px.gif" alt="wuchong&#39;blog"><br>代码注意点：</p>
+<ul>
+<li>python支持负数索引，内循环进行到下标为1的第二个元素即可</li>
+<li>每次比较是外循环的index对应的值进行比较<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">insert_sort</span><span class="params">(array)</span>:</span></span><br><span class="line">    n = len(array)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n):</span><br><span class="line">        val = array[i]</span><br><span class="line">        j = i <span class="comment"># 内循环终止条件 （防止负数索引）</span></span><br><span class="line">        <span class="keyword">while</span> j &gt; <span class="number">0</span> <span class="keyword">and</span> val &lt; array[j<span class="number">-1</span>]: <span class="comment"># 注意逻辑判断的截断属性</span></span><br><span class="line">            array[j] = array[j<span class="number">-1</span>]</span><br><span class="line">            j -= <span class="number">1</span></span><br><span class="line">        array[j] = val</span><br><span class="line">    <span class="keyword">return</span> array</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h3><p>非稳定，直接插入排序的改进<br>以下解释来自wiki百科<br>例如，假设有这样一组数[ 13 14 94 33 82 25 59 94 65 23 45 27 73 25 39 10 ]，如果我们以步长为5开始进行排序，我们可以通过将这列表放在有5列的表中来更好地描述算法，这样他们就应该看起来是这样：<br>13 14 94 33 82<br>25 59 94 65 23<br>45 27 73 25 39<br>10<br>然后我们对每列进行排序：<br>10 14 73 25 23<br>13 27 94 33 39<br>25 59 94 65 82<br>45<br>将上述四行数字，依序接在一起时我们得到：[ 10 14 73 25 23 13 27 94 33 39 25 59 94 65 82 45 ].这时10已经移至正确位置了，然后再以3为步长进行排序：<br>10 14 73<br>25 23 13<br>27 94 33<br>39 25 59<br>94 65 82<br>45<br>排序之后变为：<br>10 14 13<br>25 23 33<br>27 25 59<br>39 65 73<br>45 94 82<br>94<br>最后以1步长进行排序（此时就是简单的插入排序了）。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自己实现的，有改进空间，可以去不用双循环</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">shell_sort</span><span class="params">(array)</span>:</span></span><br><span class="line">    n = len(array)</span><br><span class="line">    k = n // <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> k &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, k):</span><br><span class="line">            <span class="keyword">for</span> ind <span class="keyword">in</span> range(<span class="number">0</span>, n, k):</span><br><span class="line">                j = ind</span><br><span class="line">                temp = array[j]</span><br><span class="line">                <span class="keyword">while</span> (j // k) &gt; <span class="number">0</span> <span class="keyword">and</span> array[j-k] &gt; temp :</span><br><span class="line">                    array[j] = array[j-k]</span><br><span class="line">                    j = j - k</span><br><span class="line">                array[j] = temp</span><br><span class="line">        k = k // <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> array</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># wiki百科上的算法</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">shell_sort</span><span class="params">(list)</span>:</span></span><br><span class="line">    n = len(list)</span><br><span class="line">    <span class="comment"># 初始步长</span></span><br><span class="line">    gap = n // <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> gap &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(gap, n): <span class="comment"># 直接略过每个序列的第一个元素</span></span><br><span class="line">            <span class="comment"># 每个步长进行插入排序</span></span><br><span class="line">            temp = list[i]</span><br><span class="line">            j = i</span><br><span class="line">            <span class="comment"># 插入排序</span></span><br><span class="line">            <span class="keyword">while</span> j &gt;= gap <span class="keyword">and</span> list[j - gap] &gt; temp:</span><br><span class="line">                list[j] = list[j - gap]</span><br><span class="line">                j -= gap</span><br><span class="line">            list[j] = temp</span><br><span class="line">        <span class="comment"># 得到新的步长</span></span><br><span class="line">        gap = gap // <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> list</span><br></pre></td></tr></table></figure>
+<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><p>使用递归方法</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span><span class="params">(array)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(array) &lt;= <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> array</span><br><span class="line">    n = len(array) // <span class="number">2</span></span><br><span class="line">    left = merge_sort(array[:n])</span><br><span class="line">    right = merge_sort(array[n:])</span><br><span class="line">    <span class="keyword">return</span> merge(left, right)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge</span><span class="params">(left, right)</span>:</span></span><br><span class="line">    <span class="comment"># 合并两个有序数据</span></span><br><span class="line">    l, r = len(left), len(right)</span><br><span class="line">    result = []</span><br><span class="line">    i, j = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; l <span class="keyword">and</span> j &lt; r:</span><br><span class="line">        <span class="keyword">if</span> left[i] &lt; right[j]:</span><br><span class="line">            result.append(left[i])</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            result.append(right[j])</span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">    result += left[i:]</span><br><span class="line">    result += right[j:]</span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<h4 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h4><p>快速排序的具体实现方法有很多<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quicksort</span><span class="params">(array, low, high)</span>:</span></span><br><span class="line">    <span class="comment"># high:数组长度</span></span><br><span class="line">    <span class="keyword">if</span> low &lt; high:</span><br><span class="line">        pindex = parition(array, low, high) <span class="comment"># 将数组分列，小于某一个值的在左边，大于一个值的在右边</span></span><br><span class="line">        quicksort(array, low, pindex)</span><br><span class="line">        quicksort(array, pindex+<span class="number">1</span>, high)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parition</span><span class="params">(array, low, high)</span>:</span></span><br><span class="line">    key = array[low]</span><br><span class="line">    i, j = low, high<span class="number">-1</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; j:</span><br><span class="line">        <span class="keyword">while</span> i &lt; j <span class="keyword">and</span> array[j] &gt; key:</span><br><span class="line">            j -= <span class="number">1</span></span><br><span class="line">        array[i] = array[j]</span><br><span class="line">        <span class="keyword">while</span> i &lt; j <span class="keyword">and</span> array[i] &lt; key:</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        array[j] = array[i]</span><br><span class="line">    array[i] = key</span><br><span class="line">    <span class="keyword">return</span> i</span><br></pre></td></tr></table></figure></p>
+<h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><p>使用数组存储堆结构</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">heap_sort</span><span class="params">(array)</span>:</span></span><br><span class="line">    n = len(array)</span><br><span class="line">    start = (n // <span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 初始化最大堆 从叶节点（数组的后半部分开始构造）</span></span><br><span class="line">    <span class="comment"># 数组的后一部分存储的都是叶节点，一个节点默认就是最大堆，从n//2节点往前一个一个节点的向堆里增加根节点</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(start, <span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">        heapify(array, i, n<span class="number">-1</span>)</span><br><span class="line">    <span class="comment"># 每次弹出最大值，存储到数组末尾</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n<span class="number">-1</span>, <span class="number">0</span>, <span class="number">-1</span>):</span><br><span class="line">        <span class="comment"># swap root 节点和最后一个数</span></span><br><span class="line">        array[i], array[<span class="number">0</span>] = array[<span class="number">0</span>], array[i]</span><br><span class="line">        heapify(array, <span class="number">0</span>, i<span class="number">-1</span>)</span><br><span class="line">    <span class="keyword">return</span> array</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个函数是一个初始化的函数，指定数组的切片进行堆化，</span></span><br><span class="line"><span class="comment"># 堆的初始化是在堆的基础上每次增加一个元素</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">heapify</span><span class="params">(array, start, end)</span>:</span></span><br><span class="line">    root = start</span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        child = root * <span class="number">2</span> + <span class="number">1</span></span><br><span class="line">        <span class="comment"># 没有子节点</span></span><br><span class="line">        <span class="keyword">if</span> child &gt; end:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="comment"># 有节点（包括一个节点和两个节点） 找到值最大的节点</span></span><br><span class="line">        <span class="keyword">if</span> child &lt; end <span class="keyword">and</span> array[child] &lt; array[child+<span class="number">1</span>]:</span><br><span class="line">            child = child + <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> array[child] &gt; array[root]:</span><br><span class="line">            <span class="comment"># swap</span></span><br><span class="line">            array[child], array[root] = array[root], array[child]</span><br><span class="line">            root = child</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<h3 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h3><p>python中的heapq模块</p>
+<ol>
+<li>python3中heapq实现的是最小堆，而非最大堆</li>
+<li>堆的实现是基于list对象的</li>
+<li>堆操作出错，IndexError</li>
+</ol>
+<ul>
+<li>heappush(heap, item) 堆添加元素<br>heap为list(空)，或者由list对象构造的堆（heapify(x)）</li>
+<li>空list可以认为是空堆，将list对象转化堆使用  heapify（list）方法</li>
+<li>heappop(heap) 弹出最小值，直接访问最小值heap[0]</li>
+<li>heappushpop(heap, item) 压入（先）和弹出（后）对象的合并操作，比单独运行两个方法更有效率</li>
+<li>heapreplace(heap, item) 弹出（先）和压入（后）合并操作，弹出的值可能比压入的值大</li>
+<li>merge（<em> iterable， key=None， resverse=False) 返回值为iterator 输入对象为有序序列<br>相似 sorted(itertools.chain(</em> iterable))</li>
+<li>nlargest(n, iterable, key=None)</li>
+<li>nsmallest(n, iterable, key=None)<br>最后两个函数的效率比内置的min和max函数效率更高<br>利用heap模块排序，是不稳定排序<br>heappush函数支持item为tuple对象，以tuple第一个值为计算值排序，以此实现优先队列<br>具体方法见官方文档</li>
+</ul>
+<h3 id="python中的排序"><a href="#python中的排序" class="headerlink" title="python中的排序"></a>python中的排序</h3><ol>
+<li>list类的sort方法对list实现原地排序（比后者更有效率），而built-in的sorted方法新建一个list对象（接受iterable为参数）,基于<strong>le</strong></li>
+<li>以上的函数参数中的key支持函数，lambda函数，属性</li>
+<li>operator模块<br>The key-function patterns shown above are very common, so Python provides convenience functions to make accessor functions easier and faster. The operator module has itemgetter(), attrgetter(), and a methodcaller() function.<br>Using those functions, the above examples become simpler and faster:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;</span><br><span class="line">&gt;&gt;&gt; from operator import itemgetter, attrgetter</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">&gt;&gt;&gt; sorted(student_tuples, key=itemgetter(2))</span><br><span class="line">[(&apos;dave&apos;, &apos;B&apos;, 10), (&apos;jane&apos;, &apos;B&apos;, 12), (&apos;john&apos;, &apos;A&apos;, 15)]</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">&gt;&gt;&gt; sorted(student_objects, key=attrgetter(&apos;age&apos;))</span><br><span class="line">[(&apos;dave&apos;, &apos;B&apos;, 10), (&apos;jane&apos;, &apos;B&apos;, 12), (&apos;john&apos;, &apos;A&apos;, 15)]</span><br><span class="line">The operator module functions allow multiple levels of sorting. For example, to sort by grade then by age:</span><br><span class="line">&gt;&gt;&gt; sorted(student_tuples, key=itemgetter(1,2))</span><br><span class="line">[(&apos;john&apos;, &apos;A&apos;, 15), (&apos;dave&apos;, &apos;B&apos;, 10), (&apos;jane&apos;, &apos;B&apos;, 12)]</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">&gt;&gt;&gt; sorted(student_objects, key=attrgetter(&apos;grade&apos;, &apos;age&apos;))</span><br><span class="line">[(&apos;john&apos;, &apos;A&apos;, 15), (&apos;dave&apos;, &apos;B&apos;, 10), (&apos;jane&apos;, &apos;B&apos;, 12)]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>要好好利用key参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; students = [&apos;dave&apos;, &apos;john&apos;, &apos;jane&apos;]</span><br><span class="line">&gt;&gt;&gt; newgrades = &#123;&apos;john&apos;: &apos;F&apos;, &apos;jane&apos;:&apos;A&apos;, &apos;dave&apos;: &apos;C&apos;&#125;</span><br><span class="line">&gt;&gt;&gt; sorted(students, key=newgrades.__getitem__)</span><br><span class="line">[&apos;jane&apos;, &apos;dave&apos;, &apos;john&apos;]</span><br></pre></td></tr></table></figure></p>
+<ol start="4">
+<li>默认是递增，reverse=True 设置递减排序</li>
+</ol>
+<p>2017/11/14-完成冒泡排序，选择排序和插入排序<br>2017/11/16-完成希尔排序，归并排序，快速排序和堆排序及python排序专题</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    ZJ wang
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://blog.zjwang.info/2018/01/16/agls/sort/" title="基本排序">http://blog.zjwang.info/2018/01/16/agls/sort/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法补全计划/" rel="tag"># 算法补全计划</a>
+          
+            <a href="/tags/排序/" rel="tag"># 排序</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/15/python/threading/" rel="next" title="python中的线程和进程">
+                <i class="fa fa-chevron-left"></i> python中的线程和进程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/27/agls/binary_search/" rel="prev" title="二分搜索">
+                二分搜索 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ZJ wang</p>
+              <p class="site-description motion-element" itemprop="description">个人笔记，请勿参考</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现的内容"><span class="nav-number">1.</span> <span class="nav-text">实现的内容</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#冒泡排序"><span class="nav-number">1.1.</span> <span class="nav-text">冒泡排序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择排序"><span class="nav-number">2.</span> <span class="nav-text">选择排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#希尔排序"><span class="nav-number">4.</span> <span class="nav-text">希尔排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并排序"><span class="nav-number">5.</span> <span class="nav-text">归并排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#快速排序"><span class="nav-number">5.1.</span> <span class="nav-text">快速排序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆排序"><span class="nav-number">6.</span> <span class="nav-text">堆排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tips"><span class="nav-number">7.</span> <span class="nav-text">tips</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python中的排序"><span class="nav-number">8.</span> <span class="nav-text">python中的排序</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZJ wang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
