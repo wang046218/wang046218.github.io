@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="GitHub,踩坑记," />
+  <meta name="keywords" content="python,类," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="对不同的账号使用不同的ssh-key 不同的github账号对应不同的ssh-key（具体生成key的过程以及github配置略) 在ssh根目录新建config文件 12345678910#Default GitHubHost github.comHostName github.comUser gitIdentityFile ~/.ssh/id_rsa# 第二个配置Host github-as">
-<meta name="keywords" content="GitHub,踩坑记">
+<meta name="description" content="动态添加类实例的属性1234567891011121314151617181920212223242526from types import MethodTypeclass Dog(object):    def __init__(self,name,age):        self.name=name        self.age=age        print(&apos;%s+%s&apos;%(self">
+<meta name="keywords" content="python,类">
 <meta property="og:type" content="article">
-<meta property="og:title" content="电脑绑定多个github账号">
-<meta property="og:url" content="http://blog.zjwang.info/2018/03/12/tools/git/index.html">
+<meta property="og:title" content="python类属性">
+<meta property="og:url" content="http://blog.zjwang.info/2017/12/04/python/attribute/index.html">
 <meta property="og:site_name" content="Withrainy">
-<meta property="og:description" content="对不同的账号使用不同的ssh-key 不同的github账号对应不同的ssh-key（具体生成key的过程以及github配置略) 在ssh根目录新建config文件 12345678910#Default GitHubHost github.comHostName github.comUser gitIdentityFile ~/.ssh/id_rsa# 第二个配置Host github-as">
+<meta property="og:description" content="动态添加类实例的属性1234567891011121314151617181920212223242526from types import MethodTypeclass Dog(object):    def __init__(self,name,age):        self.name=name        self.age=age        print(&apos;%s+%s&apos;%(self">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-04-01T09:37:36.271Z">
+<meta property="og:updated_time" content="2018-04-01T11:48:58.017Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="电脑绑定多个github账号">
-<meta name="twitter:description" content="对不同的账号使用不同的ssh-key 不同的github账号对应不同的ssh-key（具体生成key的过程以及github配置略) 在ssh根目录新建config文件 12345678910#Default GitHubHost github.comHostName github.comUser gitIdentityFile ~/.ssh/id_rsa# 第二个配置Host github-as">
+<meta name="twitter:title" content="python类属性">
+<meta name="twitter:description" content="动态添加类实例的属性1234567891011121314151617181920212223242526from types import MethodTypeclass Dog(object):    def __init__(self,name,age):        self.name=name        self.age=age        print(&apos;%s+%s&apos;%(self">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.zjwang.info/2018/03/12/tools/git/"/>
+  <link rel="canonical" href="http://blog.zjwang.info/2017/12/04/python/attribute/"/>
 
 
 
 
 
-  <title>电脑绑定多个github账号 | Withrainy</title>
+  <title>python类属性 | Withrainy</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2018/03/12/tools/git/">
+    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2017/12/04/python/attribute/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZJ wang">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">电脑绑定多个github账号</h1>
+          <h1 class="post-title" itemprop="name headline">python类属性</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T00:00:00+08:00">
-                2018-03-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-04T00:00:00+08:00">
+                2017-12-04
               </time>
             
 
@@ -305,8 +305,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
                   </a>
                 </span>
 
@@ -342,17 +342,9 @@
       
 
       
-        <p>对不同的账号使用不同的ssh-key</p>
-<p>不同的github账号对应不同的ssh-key（具体生成key的过程以及github配置略)</p>
-<p>在ssh根目录新建config文件</p>
-<pre><code><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Default GitHub</span></span><br><span class="line">Host github.com</span><br><span class="line">HostName github.com</span><br><span class="line">User git</span><br><span class="line">IdentityFile ~/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 第二个配置</span></span><br><span class="line">Host github-<span class="keyword">as</span> <span class="comment">#这是别名，区别第一个(会多次使用)</span></span><br><span class="line">HostName github.com</span><br><span class="line">User git</span><br><span class="line">IdentityFile ~/.ssh/id_rsa_as <span class="comment">#(这里是新的key)</span></span><br></pre></td></tr></table></figure>
-</code></pre><p>测试<code>ssh -T github-as</code><br>对仓库进行用户名和邮箱设置</p>
-<pre><code>`git config --global--unset user.name`
-`git config --global--unset user.email`
-`git config user.name &quot;name&quot;`
-`git config user.email &quot;email&quot;`
-</code></pre><p>对仓库进行url重置<br><code>git remote set-url origin github-as:username/jib.git</code></p>
-<p><a href="http://blog.leanote.com/post/gm8300130/Day-59-Git-ERROR-Permission-to-XXX.git-denied-to-user" target="_blank" rel="noopener">参考链接</a><br><a href="http://zwb.io/2016/03/16/%E4%B8%80%E5%8F%B0%E7%94%B5%E8%84%91%E7%BB%91%E5%AE%9A%E4%B8%A4%E4%B8%AAgithub%E5%B8%90%E5%8F%B7%E6%95%99%E7%A8%8B/" target="_blank" rel="noopener">配置用户名</a></p>
+        <h2 id="动态添加类实例的属性"><a href="#动态添加类实例的属性" class="headerlink" title="动态添加类实例的属性"></a>动态添加类实例的属性</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> types <span class="keyword">import</span> MethodType</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.age=age</span><br><span class="line">        print(<span class="string">'%s+%s'</span>%(self.name,self.age))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_test</span><span class="params">(self,test)</span>:</span></span><br><span class="line">        self.test=test</span><br><span class="line">        print(self.test)</span><br><span class="line"></span><br><span class="line">dog=Dog(<span class="string">'Tommy'</span>, <span class="number">13</span>)</span><br><span class="line">dog.add_test=types.MethodType(add_test,dog)</span><br><span class="line">dog.add_test(<span class="number">4</span>)</span><br><span class="line">print(dog.test)   <span class="comment">#输出4</span></span><br><span class="line"><span class="comment">#下一行 报错 type object 'Dog' has no attribute 'test'</span></span><br><span class="line">print(Dog.test) 说明此时实例添加的方法和类本身没关系</span><br><span class="line">Dog.add_test=MethodType(add_test,Dog)</span><br><span class="line">Dog.add_test(<span class="number">3</span>)</span><br><span class="line">print(Dog.test)  <span class="comment">#输出3</span></span><br><span class="line"></span><br><span class="line">print(dog.test)  <span class="comment">#输出4  类的属性和实例的属性是独立的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#此时如果载新建实例，新的实例是否有test属性呢</span></span><br><span class="line">dog2=Dog(<span class="string">'r1'</span>, <span class="number">3</span>)</span><br><span class="line">print(dog2.test)  <span class="comment">#输出3</span></span><br></pre></td></tr></table></figure>
+<h2 id="solts-参数限制"><a href="#solts-参数限制" class="headerlink" title="solts 参数限制"></a><strong>solts</strong> 参数限制</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> types <span class="keyword">import</span> MethodType</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">(object)</span>:</span></span><br><span class="line">    __slots__=(<span class="string">'name'</span>,<span class="string">'age'</span>)<span class="comment">#限制变量，不限制方法</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.age=age</span><br><span class="line">        print(<span class="string">'%s+%s'</span>%(self.name,self.age))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_test</span><span class="params">(self,test)</span>:</span></span><br><span class="line">   <span class="comment"># print('测试类添加方法')</span></span><br><span class="line">   self.test=test</span><br><span class="line">   <span class="comment">#print(self.test)</span></span><br><span class="line">dog=Dog(<span class="string">'Tommy'</span>, <span class="number">13</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下一行报错 AttributeError: 'Dog' object has no attribute 'add_test'</span></span><br><span class="line"><span class="comment">#dog.add_test=MethodType(add_test,dog)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#对类添加方法（不在--solts--中）</span></span><br><span class="line">Dog.add_test=MethodType(add_test,Dog)</span><br><span class="line">dog=Dog(<span class="string">'Tommy'</span>, <span class="number">13</span>)</span><br><span class="line">dog.add_test(<span class="number">5</span>)</span><br><span class="line">print(dog.test) <span class="comment">#输出5</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># dog.test=4</span></span><br><span class="line"><span class="comment"># 报错'Dog' object attribute 'test' is read-only</span></span><br><span class="line"><span class="comment"># 利用函数增加了不在__solts__中的属性，但是为只读</span></span><br><span class="line"></span><br><span class="line">dog.add_test(<span class="number">4</span>) <span class="comment">#这里设置的还是类而不是实例的属性</span></span><br><span class="line">print(dog.test) <span class="comment">#输出4</span></span><br><span class="line">print(Dog.test) <span class="comment">#输出4</span></span><br><span class="line"><span class="comment">#新建实例</span></span><br><span class="line">dog3=Dog(<span class="string">'fog3'</span>, <span class="number">4</span>)</span><br><span class="line">print(dog3.test) <span class="comment">#输出4</span></span><br></pre></td></tr></table></figure>
+<p>以上代码基于win_10 &amp; python 3.5<br><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143186739713011a09b63dcbd42cc87f907a778b3ac73000#0" target="_blank" rel="noopener">参考</a></p>
 
       
     </div>
@@ -373,7 +365,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="http://blog.zjwang.info/2018/03/12/tools/git/" title="电脑绑定多个github账号">http://blog.zjwang.info/2018/03/12/tools/git/</a>
+    <a href="http://blog.zjwang.info/2017/12/04/python/attribute/" title="python类属性">http://blog.zjwang.info/2017/12/04/python/attribute/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -388,9 +380,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/GitHub/" rel="tag"># GitHub</a>
+            <a href="/tags/python/" rel="tag"># python</a>
           
-            <a href="/tags/踩坑记/" rel="tag"># 踩坑记</a>
+            <a href="/tags/类/" rel="tag"># 类</a>
           
         </div>
       
@@ -403,8 +395,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/27/agls/binary_search/" rel="next" title="二分搜索">
-                <i class="fa fa-chevron-left"></i> 二分搜索
+              <a href="/2017/11/23/python/数据结构-py/" rel="next" title="基本数据类型">
+                <i class="fa fa-chevron-left"></i> 基本数据类型
               </a>
             
           </div>
@@ -412,6 +404,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/21/python/Queue/" rel="prev" title="python中的queue模块">
+                python中的queue模块 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -463,8 +459,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -524,6 +529,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#动态添加类实例的属性"><span class="nav-number">1.</span> <span class="nav-text">动态添加类实例的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solts-参数限制"><span class="nav-number">2.</span> <span class="nav-text">solts 参数限制</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
