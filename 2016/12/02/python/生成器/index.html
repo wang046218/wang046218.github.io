@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python,生成器," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="#学习笔记-生成器 廖学峰Python教程 原文链接">
+<meta name="keywords" content="python,生成器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="杨辉三角与python生成器">
+<meta property="og:url" content="http://blog.zjwang.info/2016/12/02/python/生成器/index.html">
+<meta property="og:site_name" content="Withrainy">
+<meta property="og:description" content="#学习笔记-生成器 廖学峰Python教程 原文链接">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-04-02T12:05:29.134Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="杨辉三角与python生成器">
+<meta name="twitter:description" content="#学习笔记-生成器 廖学峰Python教程 原文链接">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.zjwang.info/2016/12/02/python/生成器/"/>
+
+
+
+
+
+  <title>杨辉三角与python生成器 | Withrainy</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Withrainy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">日出霞田</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2016/12/02/python/生成器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZJ wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Withrainy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">杨辉三角与python生成器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-02T00:00:00+08:00">
+                2016-12-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#学习笔记-生成器</p>
+<p>廖学峰Python教程 <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014317799226173f45ce40636141b6abc8424e12b5fb27000?t=1480666195608#0" target="_blank" rel="noopener">原文链接</a></p>
+<hr>
+<a id="more"></a>
+<h3 id="知识点备忘"><a href="#知识点备忘" class="headerlink" title="知识点备忘"></a>知识点备忘</h3><p>1.生成器 每一次返回值由<code>field</code> 定义，并存储生成器当前状态<br>2.捕获生成器结束异常<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    x = next(g)</span><br><span class="line">    print(<span class="string">'g:'</span>, x)</span><br><span class="line"><span class="keyword">except</span> StopIteration <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">'Generator return value:'</span>, e.value)</span><br><span class="line">    <span class="keyword">break</span></span><br></pre></td></tr></table></figure></p>
+<p>3.赋值语句<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">注意，赋值语句：</span><br><span class="line">a, b = b, a + b</span><br><span class="line">相当于：</span><br><span class="line">t = (b, a + b) <span class="comment"># t是一个tuple</span></span><br><span class="line">a = t[<span class="number">0</span>]</span><br><span class="line">b = t[<span class="number">1</span>]</span><br></pre></td></tr></table></figure></p>
+<h3 id="课后题-杨辉三角"><a href="#课后题-杨辉三角" class="headerlink" title="课后题-杨辉三角"></a>课后题-杨辉三角</h3><p>定义生成器<code>triangles()</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># [1]</span></span><br><span class="line"><span class="comment"># [1, 1]</span></span><br><span class="line"><span class="comment"># [1, 2, 1]</span></span><br><span class="line"><span class="comment"># [1, 3, 3, 1]</span></span><br><span class="line"><span class="comment"># [1, 4, 6, 4, 1]</span></span><br><span class="line"><span class="comment"># [1, 5, 10, 10, 5, 1]</span></span><br><span class="line"><span class="comment"># [1, 6, 15, 20, 15, 6, 1]</span></span><br><span class="line"><span class="comment"># [1, 7, 21, 35, 35, 21, 7, 1]</span></span><br><span class="line"><span class="comment"># [1, 8, 28, 56, 70, 56, 28, 8, 1]</span></span><br><span class="line"><span class="comment"># [1, 9, 36, 84, 126, 126, 84, 36, 9, 1]</span></span><br><span class="line">n = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> triangles():</span><br><span class="line">    print(t)</span><br><span class="line">    n = n + <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">10</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure></p>
+<p>我的做法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">triangles</span><span class="params">()</span>:</span></span><br><span class="line">	l=[<span class="number">1</span>]</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">		<span class="keyword">yield</span> l</span><br><span class="line">		l.insert(<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line">		l.append(<span class="number">0</span>)</span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> range(len(l)<span class="number">-1</span>):</span><br><span class="line">			l[i]=l[i]+l[i+<span class="number">1</span>]</span><br><span class="line">		<span class="comment">#这里可以变成一句话</span></span><br><span class="line">		<span class="comment">#l=[l[i]+l[i+1] for i in range(len(l)-1)]</span></span><br><span class="line">		l=l[<span class="number">0</span>:len(l)<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h3><ul>
+<li><p>python中的<code>list</code>这样的可变对象更类似c中的指针</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">l=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">m=l</span><br><span class="line">l.pop()</span><br><span class="line"><span class="comment">#无论修改l还是m都会影响到另一个</span></span><br><span class="line"><span class="comment">#同样适用于dict对象和set对象</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>range（）函数 he slice操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">range</span><span class="params">(stop)</span></span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">range</span><span class="params">(start, stop[, step])</span></span></span><br><span class="line"><span class="class"><span class="title">arguement</span></span></span><br><span class="line"><span class="class">&gt;&gt;&gt; <span class="title">range</span><span class="params">(<span class="number">1</span>,<span class="number">5</span>)</span> #代表从1到5<span class="params">(不包含<span class="number">5</span>)</span></span></span><br><span class="line">[1, 2, 3, 4]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>range(<span class="number">1</span>,<span class="number">5</span>,<span class="number">2</span>) <span class="comment">#代表从1到5，间隔2(不包含5)</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">3</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>range(<span class="number">5</span>) <span class="comment">#代表从0到5(不包含5)</span></span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line"></span><br><span class="line">documentation中的operation</span><br><span class="line">s[i:j] slice of s <span class="keyword">from</span> i to j</span><br><span class="line">s[i:j:k] slice of s <span class="keyword">from</span> i to j <span class="keyword">with</span> step k</span><br><span class="line"></span><br><span class="line">array = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">4</span>]</span><br><span class="line"><span class="comment">#其实这里的顺序标识是</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">4</span>]</span><br><span class="line">(<span class="number">0</span>，<span class="number">1</span>，<span class="number">2</span>，<span class="number">3</span>，<span class="number">4</span>，<span class="number">5</span>，<span class="number">6</span>)</span><br><span class="line">(<span class="number">-7</span>,<span class="number">-6</span>,<span class="number">-5</span>,<span class="number">-4</span>,<span class="number">-3</span>,<span class="number">-2</span>,<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>array[<span class="number">0</span>:] <span class="comment">#列出0以后的</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">4</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>array[<span class="number">1</span>:] <span class="comment">#列出1以后的</span></span><br><span class="line">[<span class="number">2</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">4</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>array[:<span class="number">-1</span>] <span class="comment">#列出-1之前的</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">8</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>array[<span class="number">3</span>:<span class="number">-3</span>] <span class="comment">#列出3到-3之间的</span></span><br><span class="line">[<span class="number">3</span>]</span><br><span class="line">&gt;&gt;&gt;倒序显示 array[::<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>slice 操作符document</p>
+<blockquote>
+<p>The slice of s from i to j with step k is defined as the sequence of items with index x = i + n<em>k such that 0 &lt;= n &lt; (j-i)/k. In other words, the indices are i, i+k, i+2</em>k, i+3<em>k and so on, stopping when j is reached (but never including j). If i or j is greater than len(s), use len(s). If i or j are omitted or None, they become “end” values (which end depends on the sign of k).
+</em>Note, k cannot be zero. If k is None, it is treated like 1.*</p>
+</blockquote>
+<ul>
+<li>杨辉三角最佳答案<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">triangles</span><span class="params">()</span>:</span></span><br><span class="line">    L = [<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        <span class="keyword">yield</span> L</span><br><span class="line">        L.append(<span class="number">0</span>)</span><br><span class="line">        L = [L[i - <span class="number">1</span>] + L[i] <span class="keyword">for</span> i <span class="keyword">in</span> range(len(L))]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>解释：最重要的区别在与list的索引值index，不像c那样的索引值，python的索引允许负值<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">row</span><br><span class="line"><span class="number">0</span>    <span class="number">1</span></span><br><span class="line"><span class="number">1</span>    <span class="number">1</span> <span class="number">1</span></span><br><span class="line"><span class="number">2</span>    <span class="number">1</span> <span class="number">2</span> <span class="number">1</span></span><br><span class="line"><span class="number">3</span>    <span class="number">1</span> <span class="number">3</span> <span class="number">3</span> <span class="number">1</span></span><br><span class="line"><span class="number">4</span>    <span class="number">1</span> <span class="number">4</span> <span class="number">6</span> <span class="number">4</span> <span class="number">1</span></span><br><span class="line">------------------</span><br><span class="line">col  <span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span></span><br><span class="line">听说，下雨天，笛卡尔坐标系(码农版)和帕斯卡三角形更配哦~ 【某芙广告部请联络我，洽谈代言事宜！】</span><br><span class="line"></span><br><span class="line">这不是巧了么？我可以用T(row,col)来代表杨辉三角形中的每一个元素对不对？</span><br><span class="line">然后大家可以发现如下几个事实:</span><br><span class="line"><span class="number">1.</span>col==<span class="number">0</span> 的这一列上的元素总是 <span class="number">1</span> ， 例如T(<span class="number">0</span>,<span class="number">0</span>),T(<span class="number">1</span>,<span class="number">0</span>),T(<span class="number">4</span>,<span class="number">0</span>)</span><br><span class="line"><span class="number">2.</span>col==row 的这一列上的元素总是 <span class="number">1</span>, 例如 T(<span class="number">0</span>,<span class="number">0</span>),T(<span class="number">1</span>,<span class="number">1</span>),T(<span class="number">4</span>,<span class="number">4</span>)</span><br><span class="line"><span class="number">3.</span>(敲黑板,重点)  T(row,col)上的元素等于 T(row<span class="number">-1</span>,col<span class="number">-1</span>)+T(row<span class="number">-1</span>,col)，</span><br><span class="line">例如 T(<span class="number">4</span>,<span class="number">3</span>) == T(<span class="number">3</span>,<span class="number">2</span>)+T(<span class="number">3</span>,<span class="number">3</span>) 即 <span class="number">4</span> == <span class="number">3</span> + <span class="number">1</span></span><br><span class="line">例如 T(<span class="number">4</span>,<span class="number">2</span>) == T(<span class="number">3</span>,<span class="number">1</span>)+T(<span class="number">3</span>,<span class="number">2</span>) 即 <span class="number">6</span> == <span class="number">3</span> + <span class="number">3</span></span><br><span class="line">虽然讲得很有道理的样子，然而机智的小伙伴们还是一眼就看出了破绽。</span><br><span class="line">介绍事实<span class="number">3</span>时候，为什么不拿T(<span class="number">0</span>,<span class="number">0</span>),T(<span class="number">1</span>,<span class="number">0</span>)，T(<span class="number">1</span>,<span class="number">1</span>)这样的元素举例？</span><br><span class="line">按我的分析 T(<span class="number">0</span>,<span class="number">0</span>) == T(<span class="number">-1</span>,<span class="number">-1</span>)+T(<span class="number">-1</span>,<span class="number">0</span>) ,这不翻车了么。妈蛋的，确实翻车了！</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">triangles</span><span class="params">()</span>:</span></span><br><span class="line">    L = [<span class="number">1</span>] <span class="comment">#所以在这个解法里，作者很机智，直接给第0行初始化一个[1]</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        <span class="keyword">yield</span> L  <span class="comment"># 生成第0行，问题解决。</span></span><br><span class="line">        。。。</span><br><span class="line">我们再来看看第<span class="number">1</span>行的情况，</span><br><span class="line">T(<span class="number">1</span>,<span class="number">0</span>) == T(<span class="number">0</span>,<span class="number">-1</span>)+T(<span class="number">0</span>,<span class="number">0</span>) ,T(<span class="number">0</span>,<span class="number">0</span>)是<span class="number">1</span>，T(<span class="number">0</span>,<span class="number">-1</span>)不存在。</span><br><span class="line">T(<span class="number">1</span>,<span class="number">1</span>) == T(<span class="number">0</span>,<span class="number">0</span>)+T(<span class="number">0</span>,<span class="number">1</span>)  ,T(<span class="number">0</span>,<span class="number">0</span>)是<span class="number">1</span>，T(<span class="number">0</span>,<span class="number">1</span>)不存在</span><br><span class="line">根据事实<span class="number">1</span>，事实<span class="number">2</span> 我们知道T(<span class="number">1</span>,<span class="number">0</span>)和T(<span class="number">1</span>,<span class="number">1</span>)都是<span class="number">1</span>,将已知量带入我们的式子.</span><br><span class="line"><span class="number">1</span> = x+<span class="number">1</span> 得x=<span class="number">0</span></span><br><span class="line"><span class="number">1</span> = <span class="number">1</span>+x 得x=<span class="number">0</span></span><br><span class="line">发现了没有，要想让这个算法进行下去，第<span class="number">0</span>行元素命格不行【八字欠零，五行(xing2)缺零】，一共缺了前后两个零。</span><br><span class="line"></span><br><span class="line"><span class="comment">#在假想的情况下，第0行如果能像图中这样补上两个0，那么生成第1行的时候就轻松愉快了。</span></span><br><span class="line"><span class="comment">#上边我们分析过了生成第1行需要的T(0,-1)和T(0,1),现在已经到货.</span></span><br><span class="line">r</span><br><span class="line"><span class="number">0</span> [<span class="number">0</span> <span class="number">1</span> <span class="number">0</span>]</span><br><span class="line"><span class="number">1</span>    <span class="number">1</span> <span class="number">1</span></span><br><span class="line"><span class="number">2</span>    <span class="number">1</span> <span class="number">2</span> <span class="number">1</span></span><br><span class="line"><span class="number">3</span>    <span class="number">1</span> <span class="number">3</span> <span class="number">3</span> <span class="number">1</span></span><br><span class="line"><span class="number">4</span>    <span class="number">1</span> <span class="number">4</span> <span class="number">6</span> <span class="number">4</span> <span class="number">1</span></span><br><span class="line">------------------</span><br><span class="line">c <span class="number">-1</span> <span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span></span><br><span class="line">那就这样定了，给第<span class="number">0</span>行补<span class="number">0.</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">triangles</span><span class="params">()</span>:</span></span><br><span class="line">    L = [<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        <span class="keyword">yield</span> L</span><br><span class="line">        L.append(<span class="number">0</span>) <span class="comment">#作者真的给上一行补了0，可是为什么只补了一个0？</span></span><br><span class="line">        L = [L[i - <span class="number">1</span>] + L[i] <span class="keyword">for</span> i <span class="keyword">in</span> range(len(L))] <span class="comment">#生成第1行</span></span><br><span class="line">这里真的是巧合了！！！</span><br><span class="line">学习切片的时候，廖大说过列表倒数第一个元素的索引是<span class="number">-1</span>。</span><br><span class="line">所以，我们在上图里看到的T(<span class="number">0</span>,<span class="number">-1</span>),在python列表里是绕到后边去了。</span><br><span class="line">自然界里的列表[<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>],各元素索引依次为 <span class="number">-1</span>,<span class="number">0</span>,<span class="number">1</span></span><br><span class="line">python里的列表[<span class="number">1</span>,<span class="number">0</span>],各元素索引依次为<span class="number">0</span>,<span class="number">1</span>/<span class="number">-1</span>,就像一个环，两端粘在了一起。</span><br><span class="line"></span><br><span class="line">看代码</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">triangles</span><span class="params">()</span>:</span></span><br><span class="line">    L = [<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        <span class="keyword">yield</span> L</span><br><span class="line">        L.append(<span class="number">0</span>) <span class="comment">#补完0后L的状态 [1,0]</span></span><br><span class="line">        L = [L[i - <span class="number">1</span>] + L[i] <span class="keyword">for</span> i <span class="keyword">in</span> range(len(L))] <span class="comment">#生成第1行</span></span><br><span class="line"></span><br><span class="line">已知 L:[<span class="number">1</span>,<span class="number">0</span>] ,len(L):<span class="number">2</span> ,range(<span class="number">0</span>,<span class="number">2</span>)不包含<span class="number">2</span></span><br><span class="line">列表生成式[L[i - <span class="number">1</span>] + L[i] <span class="keyword">for</span> i <span class="keyword">in</span> range(len(L))]会生成什么鬼？</span><br><span class="line">当i=<span class="number">0</span>时 L[i<span class="number">-1</span>]+L[i] == <span class="number">0</span>+<span class="number">1</span> == <span class="number">1</span></span><br><span class="line">当i=<span class="number">1</span>时 L[i<span class="number">-1</span>]+L[i] == <span class="number">1</span>+<span class="number">0</span> == <span class="number">1</span></span><br><span class="line">所以这个列表生成式最终生成了 [<span class="number">1</span>,<span class="number">1</span>],然后将它赋给L。然后<span class="keyword">yield</span> L.</span><br><span class="line">然后生成第<span class="number">2</span>行：</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">triangles</span><span class="params">()</span>:</span></span><br><span class="line">    L = [<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        <span class="keyword">yield</span> L <span class="comment">#生成第2行时的开局状态，L:[1,1]</span></span><br><span class="line">        L.append(<span class="number">0</span>) <span class="comment">#补0，[1,1,0]</span></span><br><span class="line">        L = [L[i - <span class="number">1</span>] + L[i] <span class="keyword">for</span> i <span class="keyword">in</span> range(len(L))] <span class="comment">#生成第2行</span></span><br><span class="line">然后生成第<span class="number">3</span>行。</span><br><span class="line">然后生成第n行。。。</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    ZJ wang
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://blog.zjwang.info/2016/12/02/python/生成器/" title="杨辉三角与python生成器">http://blog.zjwang.info/2016/12/02/python/生成器/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/生成器/" rel="tag"># 生成器</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/06/agls/linkedlist/" rel="prev" title="链表">
+                链表 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ZJ wang</p>
+              <p class="site-description motion-element" itemprop="description">个人笔记，请勿参考</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#知识点备忘"><span class="nav-number">1.</span> <span class="nav-text">知识点备忘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#课后题-杨辉三角"><span class="nav-number">2.</span> <span class="nav-text">课后题-杨辉三角</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#填坑"><span class="nav-number">3.</span> <span class="nav-text">填坑</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZJ wang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
