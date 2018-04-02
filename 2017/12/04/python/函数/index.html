@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python,函数," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.返回函数高阶函数除了可以接受函数作为参数外，还可以把函数作为结果值返回。下面就是一个例子 1234567def lazy_sum(*args):    def sum():        ax = 0        for n in args:            ax = ax + n        return ax    return sum 每次调用lazy_sum函数返回的是函数s">
+<meta name="keywords" content="python,函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python中的函数">
+<meta property="og:url" content="http://blog.zjwang.info/2017/12/04/python/函数/index.html">
+<meta property="og:site_name" content="Withrainy">
+<meta property="og:description" content="1.返回函数高阶函数除了可以接受函数作为参数外，还可以把函数作为结果值返回。下面就是一个例子 1234567def lazy_sum(*args):    def sum():        ax = 0        for n in args:            ax = ax + n        return ax    return sum 每次调用lazy_sum函数返回的是函数s">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-04-02T19:46:51.153Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python中的函数">
+<meta name="twitter:description" content="1.返回函数高阶函数除了可以接受函数作为参数外，还可以把函数作为结果值返回。下面就是一个例子 1234567def lazy_sum(*args):    def sum():        ax = 0        for n in args:            ax = ax + n        return ax    return sum 每次调用lazy_sum函数返回的是函数s">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.zjwang.info/2017/12/04/python/函数/"/>
+
+
+
+
+
+  <title>python中的函数 | Withrainy</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Withrainy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2017/12/04/python/函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZJ wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Withrainy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python中的函数</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-04T00:00:00+08:00">
+                2017-12-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-返回函数"><a href="#1-返回函数" class="headerlink" title="1.返回函数"></a>1.返回函数</h3><p>高阶函数除了可以接受函数作为参数外，还可以把函数作为结果值返回。<br>下面就是一个例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lazy_sum</span><span class="params">(*args)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sum</span><span class="params">()</span>:</span></span><br><span class="line">        ax = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> args:</span><br><span class="line">            ax = ax + n</span><br><span class="line">        <span class="keyword">return</span> ax</span><br><span class="line">    <span class="keyword">return</span> sum</span><br></pre></td></tr></table></figure>
+<p>每次调用<code>lazy_sum</code>函数返回的是函数<code>sum</code>的<code>positional</code>类型的值</p>
+<a id="more"></a>
+<p>看这个例子<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hellocounter</span><span class="params">(name)</span>:</span></span><br><span class="line">    count=[<span class="number">0</span>]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">counter</span><span class="params">()</span>:</span></span><br><span class="line">        count[<span class="number">0</span>]=count[<span class="number">0</span>]+<span class="number">1</span></span><br><span class="line">        <span class="keyword">print</span> (<span class="string">'Hello,'</span>,name,<span class="string">','</span>,str(count[<span class="number">0</span>])+<span class="string">' access!'</span>)</span><br><span class="line">    <span class="keyword">return</span> counter</span><br><span class="line">hello = hellocounter(<span class="string">'guzhendong'</span>)</span><br><span class="line">hello()</span><br><span class="line">hello()</span><br><span class="line">hello()</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出</span></span><br><span class="line"><span class="comment">#Hello, guzhendong , 1 access!</span></span><br><span class="line"><span class="comment">#Hello, guzhendong , 2 access!</span></span><br><span class="line"><span class="comment">#Hello, guzhendong , 3 access!</span></span><br></pre></td></tr></table></figure></p>
+<p>请注意每次输出的结果都不一样，关键就在与初始化<code>count=[0]</code>的位置实在定义<code>def counter()</code>之前</p>
+<ul>
+<li>说明：对返回的函数进行调用的时候他只执行定义他的代码块，<code>count[]</code>不作为变量处理</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">count[<span class="number">0</span>]=count[<span class="number">0</span>]+<span class="number">1</span></span><br><span class="line"><span class="keyword">print</span> (<span class="string">'Hello,'</span>,name,<span class="string">','</span>,str(count[<span class="number">0</span>])+<span class="string">' access!'</span>)</span><br></pre></td></tr></table></figure>
+<p>备份这一段<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">简短而到位：“第一个函数返回的list里面存放的三个函数里面的i 其实都指向的是同一个栈区地址；第二个里面返回的list是预先分配好不同的i的栈区地址然后才压进去”。实际上关键在于--fs.append(f)和fs.append(f(i))的区别。这里用id()函数证明一下：</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">()</span>:</span></span><br><span class="line">    fs = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">4</span>):</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">()</span>:</span></span><br><span class="line">            print(id(f))</span><br><span class="line">            <span class="keyword">return</span> i*i</span><br><span class="line">        fs.append(f)</span><br><span class="line">    <span class="keyword">return</span> fs</span><br><span class="line"></span><br><span class="line">f1, f2, f3 = count()</span><br><span class="line"></span><br><span class="line">print(<span class="string">'id of f1(): '</span>, id(f1()))</span><br><span class="line">print(<span class="string">'id of f2(): '</span>, id(f2()))</span><br><span class="line">print(<span class="string">'id of f3(): '</span>, id(f3()))</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出：</span></span><br><span class="line"><span class="number">2387112662968</span></span><br><span class="line">id of f1():  <span class="number">1530462928</span></span><br><span class="line"><span class="number">2387112662968</span></span><br><span class="line">id of f2():  <span class="number">1530462928</span></span><br><span class="line"><span class="number">2387112662968</span></span><br><span class="line">id of f3():  <span class="number">1530462928</span></span><br><span class="line">即：count()函数调用后，返回的list里面存放的<span class="string">"三个函数"</span>，实际是同一个引用对象,当然i指向同一块栈地址；</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count1</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(j)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">g</span><span class="params">()</span>:</span></span><br><span class="line">            print(id(g))</span><br><span class="line">            <span class="keyword">return</span> j * j</span><br><span class="line">        <span class="keyword">return</span> g</span><br><span class="line">    fs = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">4</span>):</span><br><span class="line">        fs.append(f(i))</span><br><span class="line">    <span class="keyword">return</span> fs</span><br><span class="line"></span><br><span class="line">f1, f2, f3 = count1()</span><br><span class="line"></span><br><span class="line">print(<span class="string">'id of f1(): '</span>, id(f1()))</span><br><span class="line">print(<span class="string">'id of f2(): '</span>, id(f2()))</span><br><span class="line">print(<span class="string">'id of f3(): '</span>, id(f3()))</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出：</span></span><br><span class="line"><span class="number">2403054163760</span></span><br><span class="line">id of f1():  <span class="number">1530462672</span></span><br><span class="line"><span class="number">2403054163896</span></span><br><span class="line">id of f2():  <span class="number">1530462768</span></span><br><span class="line"><span class="number">2403054164032</span></span><br><span class="line">id of f3():  <span class="number">1530462928</span></span><br><span class="line">即：count1()函数调用后，返回的list里面存放的三个函数，分别指向三个引用对象（互不影响），每个对象已分配好i的栈地址的。</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-匿名函数lambda"><a href="#2-匿名函数lambda" class="headerlink" title="2.匿名函数lambda"></a>2.匿名函数lambda</h3><p>摘录一部分网友对返回函数的解释<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 匿名函数lambda使用，上节中学习了 “返回函数” 这节学习了 “匿名函数”</span></span><br><span class="line"><span class="comment"># （1）、如果你定义一个有参数的函数，返回函数是一个无参函数，</span></span><br><span class="line"><span class="comment"># 那么将定义的有参函数赋值给一个变量(赋值后变量指针指向函数，这时变量就是函数的别名)时，</span></span><br><span class="line"><span class="comment"># 需要转递参数，调用函数变量就等于执行函数体</span></span><br><span class="line"><span class="comment"># （2）、如果你定义一个无参数的函数，返回函数是一个有参函数，</span></span><br><span class="line"><span class="comment"># 那么将定义的无参函数赋值给一个变量(赋值后变量指针指向函数，这时变量就是函数的别名)时，</span></span><br><span class="line"><span class="comment"># 不需要转递参数，调用函数变量时传递参数就等于执行函数体</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_return_func1</span><span class="params">(x, y)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">g</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="keyword">return</span> x**<span class="number">2</span> + y**<span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> g</span><br><span class="line"><span class="comment"># 返回lambda匿名函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_return_lambda1</span><span class="params">(x, y)</span>:</span></span><br><span class="line">    <span class="comment"># 无参数lambda匿名函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">lambda</span>: x ** <span class="number">2</span> + y ** <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 有函数调用</span></span><br><span class="line">f1 = build_return_func1(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">f2 = build_return_lambda1(<span class="number">2</span>, <span class="number">4</span>)</span><br><span class="line">print(f1())</span><br><span class="line">print(f2())</span><br></pre></td></tr></table></figure></p>
+<p>关键看这一部分知乎用户的问答<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#lambda :i</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">odd</span><span class="params">()</span>:</span></span><br><span class="line">    f=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">'abcdefg'</span>:</span><br><span class="line">        f.append((<span class="keyword">lambda</span>:i))</span><br><span class="line">    <span class="keyword">return</span> f</span><br><span class="line"></span><br><span class="line"><span class="comment">#lambda i:i</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">no_odd</span><span class="params">()</span>:</span></span><br><span class="line">    f=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">'abcdefg'</span>:</span><br><span class="line">        f.append((<span class="keyword">lambda</span> i:i))</span><br><span class="line">    <span class="keyword">return</span> f</span><br><span class="line"></span><br><span class="line"><span class="comment">#lambda i=i:i</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f_odd</span><span class="params">()</span>:</span></span><br><span class="line">    f=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">'abcdefg'</span>:</span><br><span class="line">        f.append((<span class="keyword">lambda</span> i=i:i))</span><br><span class="line">    <span class="keyword">return</span> f</span><br><span class="line"></span><br><span class="line"><span class="comment">#lambda a=i:i</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a_odd</span><span class="params">()</span>:</span></span><br><span class="line">    f=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">'abcdefg'</span>:</span><br><span class="line">        f.append((<span class="keyword">lambda</span> a=i:i))</span><br><span class="line">    <span class="keyword">return</span> f</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#这是一个简单的for循环</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">for_iter</span><span class="params">(obj)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> obj:</span><br><span class="line">        <span class="keyword">print</span> (i(),end=<span class="string">''</span>)</span><br></pre></td></tr></table></figure></p>
+<p>用 for_iter 循环 odd()，no_odd(), f_odd(),a_odd() 分别会生成‘ggggggg’，error,’abcdefg‘ 和 ‘ggggggg’四种结果</p>
+<p>#解释</p>
+<p>实际上结论就是，如果你的lambda表达式不给定local的default input的话，他并不会记住每次你给他定义时，让他输出的所谓local variable i<br>例如odd()函数中的i，看起来是 for i 中的i，其实已经变成了lambda表达式中的本地i。因为i是一个新的变量，他的值和外部的for没有任何关系。<br>no_odd（）当然是错误的因为你的lambda表达式需要一个input，而你的for_iter里面的print 没有input。<br>f_odd（）之所以输出正确是因为你给他的input变量i 一个默认值，i（这个i是for里面的i）。因此你不输入任何input，他就会根据默认值输出i。<br>a_odd （）之所以错误是因为虽然你给a正确<br>的默认值，但是你的输出不是a，而是i。这个i是没有定义的。因此这就犯下了和odd()一样的错误。如果你把a_odd（）改成</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a_odd</span><span class="params">()</span>:</span></span><br><span class="line">    f=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">'abcdefg'</span>:</span><br><span class="line">    f.append((<span class="keyword">lambda</span> a=i:a))</span><br><span class="line">    <span class="keyword">return</span> f</span><br></pre></td></tr></table></figure>
+<p>你就会得到正确的答案。</p>
+<p>至于为什么1，4两个函数最后输出的都是’ggggggg’，那是因为，在最后return f的时候，function会检查lambda表达式中的i。如果i不是lambda的输出参数，那么python就会检查i是不是一个全局参数。这时候function里面的i的值是‘g’，那么于是所有的lambda表达式里面的i都被替换成‘g’了。</p>
+<p>尝试下面的代码：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a_odd</span><span class="params">()</span>:</span></span><br><span class="line">    f=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">'abcdefg'</span>:</span><br><span class="line">    f.append((<span class="keyword">lambda</span> a=i:i))</span><br><span class="line">    i=<span class="string">'s'</span></span><br><span class="line">    <span class="keyword">return</span> f</span><br></pre></td></tr></table></figure></p>
+<p>你会发现输出全部都是‘ssssss’；</p>
+<p>这个完美解决了廖雪峰教程时看到的这一段代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">()</span>:</span></span><br><span class="line">    fs = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">4</span>):</span><br><span class="line">        fs.append(<span class="keyword">lambda</span> i=i:i*i)</span><br><span class="line"><span class="keyword">return</span> fs</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>参考链接<br><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431835236741e42daf5af6514f1a8917b8aaadff31bf000" target="_blank" rel="noopener">廖雪峰的python教程</a><br><a href="https://www.zhihu.com/question/24870380" target="_blank" rel="noopener">知乎用户解释lambda</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    ZJ wang
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://blog.zjwang.info/2017/12/04/python/函数/" title="python中的函数">http://blog.zjwang.info/2017/12/04/python/函数/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/函数/" rel="tag"># 函数</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/23/python/数据结构-py/" rel="next" title="基本数据类型">
+                <i class="fa fa-chevron-left"></i> 基本数据类型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/04/python/attribute/" rel="prev" title="python类属性">
+                python类属性 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ZJ wang</p>
+              <p class="site-description motion-element" itemprop="description">敲代码的火车修理工</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-返回函数"><span class="nav-number">1.</span> <span class="nav-text">1.返回函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-匿名函数lambda"><span class="nav-number">2.</span> <span class="nav-text">2.匿名函数lambda</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZJ wang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
