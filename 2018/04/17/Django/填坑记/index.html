@@ -77,17 +77,18 @@
 
 
 
-<meta name="description" content="敲代码的火车修理工">
+<meta name="description" content="2 supervisor1 使用wsgi启动时报各种配置缺失的异常raise ImproperlyConfigured(“The SECRET_KEY setting must not be empty.”)在开发时，对settings模块进行了分离,定义了base.py develop.py product.py对应不同的配置 1234# 在manage.py中这样配置属性import ospr">
 <meta name="keywords" content="python 博客 blog Django">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Withrainy">
-<meta property="og:url" content="http://blog.zjwang.info/tags/dict/index.html">
+<meta property="og:url" content="http://blog.zjwang.info/2018/04/17/Django/填坑记/index.html">
 <meta property="og:site_name" content="Withrainy">
-<meta property="og:description" content="敲代码的火车修理工">
+<meta property="og:description" content="2 supervisor1 使用wsgi启动时报各种配置缺失的异常raise ImproperlyConfigured(“The SECRET_KEY setting must not be empty.”)在开发时，对settings模块进行了分离,定义了base.py develop.py product.py对应不同的配置 1234# 在manage.py中这样配置属性import ospr">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-04-16T20:19:05.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Withrainy">
-<meta name="twitter:description" content="敲代码的火车修理工">
+<meta name="twitter:description" content="2 supervisor1 使用wsgi启动时报各种配置缺失的异常raise ImproperlyConfigured(“The SECRET_KEY setting must not be empty.”)在开发时，对settings模块进行了分离,定义了base.py develop.py product.py对应不同的配置 1234# 在manage.py中这样配置属性import ospr">
 
 
 
@@ -117,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.zjwang.info/tags/dict/"/>
+  <link rel="canonical" href="http://blog.zjwang.info/2018/04/17/Django/填坑记/"/>
 
 
 
 
 
-  <title>Tag: dict | Withrainy</title>
+  <title> | Withrainy</title>
   
 
 
@@ -142,7 +143,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -246,54 +247,162 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>dict<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2018/04/17/Django/填坑记/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZJ wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Withrainy">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/11/23/python/数据结构-py/" itemprop="url">
-              
-                <span itemprop="name">基本数据类型</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-23T00:00:00+08:00"
-              content="2017-11-23" >
-          11-23
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-17T04:01:07+08:00">
+                2018-04-17
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="2-supervisor"><a href="#2-supervisor" class="headerlink" title="2 supervisor"></a>2 supervisor</h2><h2 id="1-使用wsgi启动时报各种配置缺失的异常"><a href="#1-使用wsgi启动时报各种配置缺失的异常" class="headerlink" title="1 使用wsgi启动时报各种配置缺失的异常"></a>1 使用wsgi启动时报各种配置缺失的异常</h2><p>raise ImproperlyConfigured(“The SECRET_KEY setting must not be empty.”)<br>在开发时，对settings模块进行了分离,定义了<br>base.py develop.py product.py<br>对应不同的配置</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在manage.py中这样配置属性</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">profile = os.environ.get(<span class="string">'some—var'</span>, <span class="string">'develop'</span>)</span><br><span class="line">os.environ.setdefault(<span class="string">"DJANGO_SETTINGS_MODULE"</span>, <span class="string">"typeidea.settings.%s"</span> % profile)</span><br></pre></td></tr></table></figure>
+<p>在使用gunicorn启动时wsgi应用时总是报配置缺失的异常<br>于是打开wsgi.py</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wsgi.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> django.core.wsgi <span class="keyword">import</span> get_wsgi_application</span><br><span class="line"><span class="comment"># profile = os.environ.get('TYPEIDEA_PROFILE', 'product')</span></span><br><span class="line"><span class="comment"># os.environ.setdefault("DJANGO_SETTINGS_MODULE", "typeidea.settings.%s" % profile)</span></span><br><span class="line">os.environ.setdefault(<span class="string">"DJANGO_SETTINGS_MODULE"</span>, <span class="string">"typeidea.settings')</span></span><br><span class="line"><span class="string">application = get_wsgi_application()</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    ZJ wang
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://blog.zjwang.info/2018/04/17/Django/填坑记/" title="">http://blog.zjwang.info/2018/04/17/Django/填坑记/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/12/tools/git/" rel="next" title="电脑绑定多个github账号">
+                <i class="fa fa-chevron-left"></i> 电脑绑定多个github账号
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -301,6 +410,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -321,8 +434,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -382,6 +504,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-supervisor"><span class="nav-number">1.</span> <span class="nav-text">2 supervisor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-使用wsgi启动时报各种配置缺失的异常"><span class="nav-number">2.</span> <span class="nav-text">1 使用wsgi启动时报各种配置缺失的异常</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -515,6 +653,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
