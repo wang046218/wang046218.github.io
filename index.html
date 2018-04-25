@@ -261,6 +261,183 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2018/04/23/Django/流程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZJ wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Withrainy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/23/Django/流程/" itemprop="url">Django wsgi源码学习</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-23T00:00:00+08:00">
+                2018-04-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/" itemprop="url" rel="index">
+                    <span itemprop="name">Django</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Django-源码分析-1-11"><a href="#Django-源码分析-1-11" class="headerlink" title="Django 源码分析 1.11"></a>Django 源码分析 1.11</h1><p>在Web应用启动后，django.setup()加载settings,配置logging,加载app！<br>之后会生成一个 WSGIHandler 实例,也就是WSGI application接口实现的可调用对象<br>在实例化WSGIHandler的<code>__init__</code>方法中,完成加载中间件<br>setting中的WSGI_APPLICATION = ‘project.wsgi.application’ 与此配置相关<br>之后每次由WSGI server转发来的请求都会使用这个实例进行响应(当然也可能同时存在多个application实例:与WSGI服务器的配置有关)</p>
+<p>对于每次请求,WSGI server调用WSGIHandler的<code>__call__</code>方法</p>
+<ul>
+<li>1.生成WSGIRequest实例,发送request_started信号</li>
+<li>2.进入中间件的链式调用,loops through the request methods, running them in order</li>
+<li>3.resolves the requested URL 处理url</li>
+<li>4.loops through each of the view processing methods</li>
+<li>5.calls the view function (usually rendering a template),也就是url模块中的as_view</li>
+<li>6.processes any exception methods</li>
+<li>7.loops through each of the response methods, (from the inside out, reverse order from request middlewares) 注意：这里的顺序是逆序</li>
+<li>8.calls the callback function to the web server</li>
+</ul>
+<h2 id="WSGIHandler"><a href="#WSGIHandler" class="headerlink" title="WSGIHandler"></a>WSGIHandler</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wsgi.py</span></span><br><span class="line"><span class="keyword">from</span> django.core.wsgi <span class="keyword">import</span> get_wsgi_application</span><br><span class="line">application = get_wsgi_application()</span><br></pre></td></tr></table></figure>
+<p>get_wsgi_application()返回一个WSGIHandler实例</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># django.core.wsgi.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_wsgi_application</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    The public interface to Django's WSGI support. Should return a WSGI</span></span><br><span class="line"><span class="string">    callable.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Allows us to avoid making django.core.handlers.WSGIHandler public API, in</span></span><br><span class="line"><span class="string">    case the internal WSGI implementation changes or moves in the future.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    django.setup(set_prefix=<span class="keyword">False</span>)</span><br><span class="line">    <span class="keyword">return</span> WSGIHandler()</span><br></pre></td></tr></table></figure>
+<p>WSGIHandler继承自BaseHandler,实现了<code>__call__</code>方法,作为WSGI server的回调函数, 每次request请求进到Django的入口.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WSGIHandler</span><span class="params">(base.BaseHandler)</span>:</span></span><br><span class="line">    request_class = WSGIRequest</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">        super(WSGIHandler, self).__init__(*args, **kwargs)</span><br><span class="line">        self.load_middleware()  <span class="comment"># 这里加载中间件</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, environ, start_response)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span> <span class="comment"># 省略</span></span><br></pre></td></tr></table></figure>
+<h2 id="Middleware类"><a href="#Middleware类" class="headerlink" title="Middleware类"></a>Middleware类</h2><p>注意：Django版本1.11<br>中间件的加载在实例化WSGIHandler的过程中实现(<code>__init__</code>), self.load_middleware()</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># diango.core.handlers.base.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseHandler</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self._request_middleware = <span class="keyword">None</span></span><br><span class="line">        self._view_middleware = <span class="keyword">None</span></span><br><span class="line">        self._template_response_middleware = <span class="keyword">None</span></span><br><span class="line">        self._response_middleware = <span class="keyword">None</span></span><br><span class="line">        self._exception_middleware = <span class="keyword">None</span></span><br><span class="line">        self._middleware_chain = <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">load_middleware</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Populate middleware lists from settings.MIDDLEWARE (or the deprecated</span></span><br><span class="line"><span class="string">        MIDDLEWARE_CLASSES).</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Must be called after the environment is fixed (see __call__ in subclasses).</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self._request_middleware = []</span><br><span class="line">        self._view_middleware = []</span><br><span class="line">        self._template_response_middleware = []</span><br><span class="line">        self._response_middleware = []</span><br><span class="line">        self._exception_middleware = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> settings.MIDDLEWARE <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">pass</span>  <span class="comment"># 省略了部分代码</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># convert_exveption_to_response增加了对异常的处理</span></span><br><span class="line">            handler = convert_exception_to_response(self._get_response)</span><br><span class="line">            <span class="keyword">for</span> middleware_path <span class="keyword">in</span> reversed(settings.MIDDLEWARE):  <span class="comment"># 注意这里的reversed</span></span><br><span class="line">                middleware = import_string(middleware_path)</span><br><span class="line">                <span class="comment"># import_string 返回对应middleware的类对象/函数对象</span></span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    mw_instance = middleware(handler) </span><br><span class="line">                    <span class="comment"># 实例化middleware或者调用函数</span></span><br><span class="line">                <span class="keyword">except</span> MiddlewareNotUsed <span class="keyword">as</span> exc:</span><br><span class="line">                    <span class="keyword">pass</span>  <span class="comment"># 有省略</span></span><br><span class="line">                <span class="keyword">if</span> mw_instance <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">                    <span class="keyword">raise</span> ImproperlyConfigured(</span><br><span class="line">                        <span class="string">'Middleware factory %s returned None.'</span> % middleware_path</span><br><span class="line">                    )</span><br><span class="line">                <span class="comment"># 接下来的6行代码,分别检测中间件实例对象是否定义了process_view/exception/template_response, 并定义了顺序, 注意insert/append方法的不同,以及for循环中的reverse</span></span><br><span class="line">                <span class="keyword">if</span> hasattr(mw_instance, <span class="string">'process_view'</span>):</span><br><span class="line">                    self._view_middleware.insert(<span class="number">0</span>, mw_instance.process_view)</span><br><span class="line">                <span class="keyword">if</span> hasattr(mw_instance, <span class="string">'process_template_response'</span>):</span><br><span class="line">                    self._template_response_middleware.append(mw_instance.process_template_response)</span><br><span class="line">                <span class="keyword">if</span> hasattr(mw_instance, <span class="string">'process_exception'</span>):</span><br><span class="line">                    self._exception_middleware.append(mw_instance.process_exception)</span><br><span class="line"></span><br><span class="line">                <span class="comment">## mw_instance 是可调用对象 实现了__call__方法/闭包</span></span><br><span class="line">                handler = convert_exception_to_response(mw_instance) </span><br><span class="line"></span><br><span class="line">        self._middleware_chain = handler  <span class="comment"># 函数执行结束时,此时的handle指向中间件列表的第一个中间件实例对象</span></span><br></pre></td></tr></table></figure>
+<p>Django 1.10版本后的middleware接口有变化,具体看文档<br>实现类接口的自定义MiddleWare类,继承自MiddlewareMixin类,实例化中间件是需要指定get_response的可调用对象,该可调用对象又在类的<code>__call__</code>中调用，这样可以实现一系列中间件的链式调用</p>
+<p>注意,中间件列表的最后一项目的get_response 方法指向WSGIHandler类的_get_response方法</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># django.utils.deprecation.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MiddlewareMixin</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, get_response=None)</span>:</span></span><br><span class="line">        self.get_response = get_response</span><br><span class="line">        super(MiddlewareMixin, self).__init__()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, request)</span>:</span></span><br><span class="line">        response = <span class="keyword">None</span></span><br><span class="line">        <span class="keyword">if</span> hasattr(self, <span class="string">'process_request'</span>):</span><br><span class="line">            response = self.process_request(request)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> response:</span><br><span class="line">            response = self.get_response(request)</span><br><span class="line">            <span class="comment"># 链式调用下,get_response就是中间件列表中的下一个中间件实例的`__call__`方法</span></span><br><span class="line">            <span class="comment"># 类似于递归函数,这样就不难理解process_request/response的调用顺序问题</span></span><br><span class="line">        <span class="keyword">if</span> hasattr(self, <span class="string">'process_response'</span>):</span><br><span class="line">            response = self.process_response(request, response)</span><br><span class="line">        <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+<h3 id="如何实现函数接口的Middleware"><a href="#如何实现函数接口的Middleware" class="headerlink" title="如何实现函数接口的Middleware"></a>如何实现函数接口的Middleware</h3><p>Django文档中对函数接口的中间件的demo如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simple_middleware</span><span class="params">(get_response)</span>:</span></span><br><span class="line">    <span class="comment"># One-time configuration and initialization.</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">middleware</span><span class="params">(request)</span>:</span></span><br><span class="line">        <span class="comment"># Code to be executed for each request before</span></span><br><span class="line">        <span class="comment"># the view (and later middleware) are called.</span></span><br><span class="line"></span><br><span class="line">        response = get_response(request)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Code to be executed for each request/response after</span></span><br><span class="line">        <span class="comment"># the view is called.</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> middleware</span><br></pre></td></tr></table></figure>
+<p>如何在这样的函数接口中定义process_request/response等hooks</p>
+<p>注意：代码未测试</p>
+<p>注意到在load_middleware()中使用hasattr判断hook</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simple_middleware</span><span class="params">(get_response)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">middleware</span><span class="params">(request)</span>:</span></span><br><span class="line">        response = get_response(request)</span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(request)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_response</span><span class="params">(request, response)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    middleware.process_request=process_request</span><br><span class="line">    middleware.process_response=process_response</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> middleware</span><br></pre></td></tr></table></figure>
+<p>在django.core.middleware中定义了很多中间件，每个app也可以定制自己的中间件</p>
+<h2 id="WSGI-Application"><a href="#WSGI-Application" class="headerlink" title="WSGI Application"></a>WSGI Application</h2><p>回到WSGIHandler, 重新看一下该类的<code>__call__</code>方法:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WSGIHandler</span><span class="params">(base.BaseHandler)</span>:</span></span><br><span class="line">    request_class = WSGIRequest</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span> <span class="comment"># 省略</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, environ, start_response)</span>:</span></span><br><span class="line">        set_script_prefix(get_script_name(environ))</span><br><span class="line">        <span class="comment"># 发送request_started信号</span></span><br><span class="line">        signals.request_started.send(sender=self.__class__, environ=environ)</span><br><span class="line">        request = self.request_class(environ)</span><br><span class="line">        response = self.get_response(request)</span><br><span class="line"></span><br><span class="line">        response._handler_class = self.__class__</span><br><span class="line"></span><br><span class="line">        status = <span class="string">'%d %s'</span> % (response.status_code, response.reason_phrase)</span><br><span class="line">        response_headers = [(str(k), str(v)) <span class="keyword">for</span> k, v <span class="keyword">in</span> response.items()]</span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> response.cookies.values():</span><br><span class="line">            response_headers.append((str(<span class="string">'Set-Cookie'</span>), str(c.output(header=<span class="string">''</span>))))</span><br><span class="line">        start_response(force_str(status), response_headers)</span><br><span class="line">        <span class="keyword">if</span> getattr(response, <span class="string">'file_to_stream'</span>, <span class="keyword">None</span>) <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span> <span class="keyword">and</span> environ.get(<span class="string">'wsgi.file_wrapper'</span>):</span><br><span class="line">            response = environ[<span class="string">'wsgi.file_wrapper'</span>](response.file_to_stream)</span><br><span class="line">        <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+<p>WSGIHandler 处理器准备工作已经完成,随后它给调度程序发送一个信号 request_started,然后根据入 environ 构造 WSGIRequest 对象,它的父类是HttpRequest.</p>
+<p>接下里调用get_response(request), 看一下原代码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_response</span><span class="params">(self, request)</span>:</span></span><br><span class="line">    <span class="string">"""Return an HttpResponse object for the given HttpRequest."""</span></span><br><span class="line">    <span class="comment"># Setup default url resolver for this thread</span></span><br><span class="line">    set_urlconf(settings.ROOT_URLCONF)</span><br><span class="line"></span><br><span class="line">    response = self._middleware_chain(request)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># This block is only needed for legacy MIDDLEWARE_CLASSES; if</span></span><br><span class="line">    <span class="comment"># MIDDLEWARE is used, self._response_middleware will be empty.</span></span><br><span class="line">    <span class="comment"># 如果settings定义的是MIDDLEWARE,则以下tyr_except代码块可以忽略</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># Apply response middleware, regardless of the response</span></span><br><span class="line">        <span class="keyword">for</span> middleware_method <span class="keyword">in</span> self._response_middleware:</span><br><span class="line">            response = middleware_method(request, response)</span><br><span class="line">            <span class="comment"># Complain if the response middleware returned None (a common error).</span></span><br><span class="line">            <span class="keyword">if</span> response <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">                <span class="keyword">raise</span> ValueError(</span><br><span class="line">                    <span class="string">"%s.process_response didn't return an "</span></span><br><span class="line">                    <span class="string">"HttpResponse object. It returned None instead."</span></span><br><span class="line">                    % (middleware_method.__self__.__class__.__name__))</span><br><span class="line">    <span class="keyword">except</span> Exception:  <span class="comment"># Any exception should be gathered and handled</span></span><br><span class="line">        signals.got_request_exception.send(sender=self.__class__, request=request)</span><br><span class="line">        response = self.handle_uncaught_exception(request, get_resolver(get_urlconf()), sys.exc_info())</span><br><span class="line"></span><br><span class="line">    response._closable_objects.append(request)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># If the exception handler returns a TemplateResponse that has not</span></span><br><span class="line">    <span class="comment"># been rendered, force it to be rendered.</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> getattr(response, <span class="string">'is_rendered'</span>, <span class="keyword">True</span>) <span class="keyword">and</span> callable(getattr(response, <span class="string">'render'</span>, <span class="keyword">None</span>)):</span><br><span class="line">        response = response.render()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> response.status_code == <span class="number">404</span>:</span><br><span class="line">        logger.warning(</span><br><span class="line">            <span class="string">'Not Found: %s'</span>, request.path,</span><br><span class="line">            extra=&#123;<span class="string">'status_code'</span>: <span class="number">404</span>, <span class="string">'request'</span>: request&#125;,</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+<p>首先设置urlconf, 其后，调用self._middleware_chain得到response</p>
+<p>此时先按照中间件正序调用所有的process_request</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2018/03/12/tools/git/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1329,154 +1506,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.zjwang.info/2017/12/04/python/函数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZJ wang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Withrainy">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/04/python/函数/" itemprop="url">Python中的函数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-04T00:00:00+08:00">
-                2017-12-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="1-返回函数"><a href="#1-返回函数" class="headerlink" title="1.返回函数"></a>1.返回函数</h3><p>高阶函数除了可以接受函数作为参数外，还可以把函数作为结果值返回。<br>下面就是一个例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lazy_sum</span><span class="params">(*args)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sum</span><span class="params">()</span>:</span></span><br><span class="line">        ax = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> args:</span><br><span class="line">            ax = ax + n</span><br><span class="line">        <span class="keyword">return</span> ax</span><br><span class="line">    <span class="keyword">return</span> sum</span><br></pre></td></tr></table></figure>
-<p>每次调用<code>lazy_sum</code>函数返回的是函数<code>sum</code>的<code>positional</code>类型的值</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/04/python/函数/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1527,7 +1556,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1538,7 +1567,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1549,7 +1578,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
