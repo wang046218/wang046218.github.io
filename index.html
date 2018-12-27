@@ -189,16 +189,6 @@
         </li>
       
         
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            About
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
@@ -280,7 +270,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/26/db/索引/" itemprop="url">MySQL 索引</a></h1>
+                <a class="post-title-link" href="/2018/12/26/db/索引/" itemprop="url">MySQL索引</a></h1>
         
 
         <div class="post-meta">
@@ -353,9 +343,30 @@
 
       
         
-          
-            <h2 id="占坑"><a href="#占坑" class="headerlink" title="占坑"></a>占坑</h2>
-          
+          <h2 id="数据库索引"><a href="#数据库索引" class="headerlink" title="数据库索引"></a>数据库索引</h2><p>索引是数据库系统里面最重要的概念之一</p>
+<h3 id="常见索引模型"><a href="#常见索引模型" class="headerlink" title="常见索引模型"></a>常见索引模型</h3><ul>
+<li><p>哈希表</p>
+<p>key-value存储数据，类似Python中的集合对象</p>
+<p>新增数据很快，但是数据是无序的，不适合区间查询</p>
+<p>这种结构适用于只有等值查询的场景</p>
+</li>
+<li><p>有序数组</p>
+<p>空间换时间 等值查询和范围查询性能优异 可以使用二分法 O(lg(N))</p>
+<p>但是数据更新时代价很大(新增数据时大概率需要挪动数据),只适用静态数据</p>
+</li>
+<li><p>N叉树</p>
+<p>平衡二叉树 查询 O(log(N)) 更新 O(log(N))</p>
+<p>使用N叉树 能有效减少磁盘io  N的大小取决于数据块的大小</p>
+<p>Innodb使用整数字段索引时，1200叉树，树高为4时，1200^3=17亿</p>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/26/db/索引/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
