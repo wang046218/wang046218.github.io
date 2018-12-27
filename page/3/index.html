@@ -251,7 +251,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://withrainy.github.io/2016/12/19/tools/批量处理doc文件/">
+    <link itemprop="mainEntityOfPage" href="http://withrainy.github.io/2016/12/19/tools/去除快捷方式小箭头/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZJ wang">
@@ -270,7 +270,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/12/19/tools/批量处理doc文件/" itemprop="url">Python处理doc文档</a></h1>
+                <a class="post-title-link" href="/2016/12/19/tools/去除快捷方式小箭头/" itemprop="url">去除快捷方式小箭头</a></h1>
         
 
         <div class="post-meta">
@@ -305,8 +305,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/tools/" itemprop="url" rel="index">
+                    <span itemprop="name">tools</span>
                   </a>
                 </span>
 
@@ -343,14 +343,20 @@
 
       
         
-          <h3 id="批量转换doc文档至docx格式"><a href="#批量转换doc文档至docx格式" class="headerlink" title="批量转换doc文档至docx格式"></a>批量转换doc文档至docx格式</h3><p>在交大远程学院做辅导教师相关工作，需要处理很多的doc文档，读取创建者编辑时间等部分数据信息，在docx使用xml格式可以很方便的做到这一点，因为需要将doc文档批量转换至docx格式。<br>环境 win 10 python 3.5</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/12/19/tools/批量处理doc文件/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
+            <p>每次看到电脑桌面的快捷方式小箭头总是有一种莫名的厌恶感，于是谷歌之，终于找到一个不借助第三方软件的简单处理方法，分享之！</p>
+<p>新建文本文档，命名为“我是处女座.bat”,名字不重要，关键是文件拓展名必须是bat，忽略系统提示的什么不能识别的消息框！以文本文件方式打开，输入如下代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">reg add “HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons” /v 29 /d “%systemroot%\system32\imageres.dll,197” /t reg_sz /f</span><br><span class="line"></span><br><span class="line">taskkill /f /im explorer.exe</span><br><span class="line"></span><br><span class="line">start explorer</span><br></pre></td></tr></table></figure>
+<p>然后保存退出，管理员身份运行！完成</p>
+<hr>
+<p>简单说下原理：</p>
+<p>快捷方式小箭头的图标其实是系统中的一个图标文件，如果我们把这个图标替换成一个透明的图标，不就看不见了吗？</p>
+<p>当然，强大的windows系统里肯定是有这样的图标的，那就是系统文件imageres.dll的第197号图标，利用注册表的键值就可以更改！这就是代码中的第一行的意思</p>
+<p>第二行和第三行就是重启当前的explorer.exe程序！</p>
+<hr>
+<h3 id="by-zjwang"><a href="#by-zjwang" class="headerlink" title="by zjwang"></a>by <a href="http://zjwang.club/about" target="_blank" rel="noopener">zjwang</a></h3><p>2016 年 05月 27日</p>
+
+          
         
       
     </div>
